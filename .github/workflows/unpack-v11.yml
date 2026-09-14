@@ -1,4 +1,4 @@
-name: V17 Google SEO and discoverability
+name: V18 sponsor and affiliate readiness
 
 on:
   push:
@@ -11,45 +11,42 @@ permissions:
   contents: write
 
 jobs:
-  google_discovery:
+  monetization_readiness:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Apply V17 Google discovery patch
-        run: python .github/scripts/v17_patch.py
+      - name: Apply V18 monetization patch
+        run: python .github/scripts/v18_patch.py
 
-      - name: Validate SEO and browser JavaScript
+      - name: Validate V18 browser JavaScript
         run: |
           python - <<'PY'
           from pathlib import Path
           import re
-          import xml.etree.ElementTree as ET
           text = Path('index.html').read_text(encoding='utf-8')
           m = re.search(r'<script>(.*)</script>', text, re.S)
           if not m:
               raise SystemExit('Inline script not found')
           Path('/tmp/ntb.js').write_text(m.group(1), encoding='utf-8')
           required = [
-              'Baby Name Generator, Creator & Family Poll | Name the Baby',
-              'application/ld+json',
-              '"@type": "WebSite"',
-              'id="babyNameTools"',
-              'Baby name generator',
-              'Family baby name poll'
+              'V18 sponsor-and-affiliate-ready one-page build',
+              'get_partner_offer',
+              'partner_impression',
+              'partner_click',
+              'rel="sponsored noopener noreferrer"',
+              'Affiliate disclosure:',
+              'get_owner_monetization',
+              'id="omPartnerCtr"'
           ]
           missing = [x for x in required if x not in text]
           if missing:
-              raise SystemExit(f'Missing V17 SEO pieces: {missing}')
-          ET.parse('sitemap.xml')
-          robots = Path('robots.txt').read_text(encoding='utf-8')
-          if 'Sitemap: https://namethebaby.site/sitemap.xml' not in robots:
-              raise SystemExit('robots.txt does not advertise sitemap')
+              raise SystemExit(f'Missing V18 pieces: {missing}')
           PY
           node --check /tmp/ntb.js
 
-      - name: Commit V17 Google discovery
+      - name: Commit V18 monetization readiness
         run: |
           if git diff --quiet -- index.html; then
             echo "No change needed."
@@ -58,7 +55,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Add Google SEO and search discovery foundation"
+          git commit -m "Add sponsor and affiliate monetization readiness"
           git push
-
-# V17 retry after validation-guard correction
