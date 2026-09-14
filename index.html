@@ -1737,7 +1737,7 @@ $("shareBtn").addEventListener("click",share);
 $("surname").addEventListener("input",()=>state.current&&renderResult());
 $("surpriseTop").addEventListener("click",resetSurprise);
 $("jumpSaved").addEventListener("click",()=>$("savedArea").scrollIntoView({behavior:"smooth"}));
-$("sponsorBtn").addEventListener("click",()=>{openModal("sponsorModal");logEvent("sponsor_opened",{});});
+if($("sponsorBtn"))$("sponsorBtn").addEventListener("click",()=>{openModal("sponsorModal");logEvent("sponsor_opened",{});});
 $("copySponsor").addEventListener("click",copySponsorInquiry);
 $("saveBackendConfig").addEventListener("click",saveAndTestBackend);
 $("clearBackendConfig").addEventListener("click",clearBackendConfig);
