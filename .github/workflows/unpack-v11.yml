@@ -1,4 +1,4 @@
-name: V13 branded social sharing
+name: V13 sponsor conversion tracking
 
 on:
   push:
@@ -11,92 +11,13 @@ permissions:
   contents: write
 
 jobs:
-  v13_social:
+  sponsor_funnel:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Add branded Open Graph image endpoint
-        run: |
-          mkdir -p api
-          cat > package.json <<'EOF'
-          {
-            "name": "name-the-baby",
-            "private": true,
-            "type": "module",
-            "engines": {
-              "node": ">=22"
-            },
-            "dependencies": {
-              "@vercel/og": "1.0.2",
-              "react": "^19.0.0"
-            }
-          }
-          EOF
-
-          cat > api/og.jsx <<'EOF'
-          import React from 'react';
-          import { ImageResponse } from '@vercel/og';
-
-          export const config = { runtime: 'edge' };
-
-          export default function handler() {
-            return new ImageResponse(
-              (
-                <div
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    background: '#fff8f2',
-                    color: '#241f2a',
-                    padding: '64px 76px',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    fontFamily: 'sans-serif',
-                  }}
-                >
-                  <div style={{position:'absolute',width:320,height:320,borderRadius:320,background:'#ffd6df',top:-145,left:-105,display:'flex'}} />
-                  <div style={{position:'absolute',width:300,height:300,borderRadius:300,background:'#d9f2ee',right:-95,bottom:-145,display:'flex'}} />
-
-                  <div style={{display:'flex',alignItems:'center',gap:20,zIndex:2}}>
-                    <div style={{width:68,height:68,borderRadius:20,background:'#ff8ea3',display:'flex',alignItems:'center',justifyContent:'center',fontSize:38,fontWeight:900}}>N</div>
-                    <div style={{display:'flex',flexDirection:'column'}}>
-                      <div style={{fontSize:34,fontWeight:900}}>Name the Baby</div>
-                      <div style={{fontSize:19,color:'#716978',marginTop:3}}>namethebaby.site</div>
-                    </div>
-                  </div>
-
-                  <div style={{display:'flex',flexDirection:'column',zIndex:2,maxWidth:980}}>
-                    <div style={{fontSize:76,fontWeight:900,lineHeight:1.02,letterSpacing:-3}}>Find it. Build it. Vote on it.</div>
-                    <div style={{fontSize:29,lineHeight:1.35,color:'#5f5664',marginTop:24}}>Explore 1,500+ baby names, create something new, save your favorites, and let family vote live.</div>
-                  </div>
-
-                  <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',zIndex:2}}>
-                    <div style={{display:'flex',gap:14}}>
-                      <div style={{border:'2px solid #eaded7',background:'#fffdfb',borderRadius:999,padding:'12px 19px',fontSize:18,fontWeight:800,display:'flex'}}>1,500+ names</div>
-                      <div style={{border:'2px solid #eaded7',background:'#fffdfb',borderRadius:999,padding:'12px 19px',fontSize:18,fontWeight:800,display:'flex'}}>Name Creation Lab</div>
-                      <div style={{border:'2px solid #eaded7',background:'#fffdfb',borderRadius:999,padding:'12px 19px',fontSize:18,fontWeight:800,display:'flex'}}>Live family voting</div>
-                    </div>
-                    <div style={{fontSize:18,fontWeight:800,color:'#716978'}}>No account required</div>
-                  </div>
-                </div>
-              ),
-              { width: 1200, height: 630 },
-            );
-          }
-          EOF
-
-          cat > robots.txt <<'EOF'
-          User-agent: *
-          Allow: /
-          Allow: /api/og
-          EOF
-
-      - name: Point social metadata to branded image
+      - name: Instrument sponsor conversion funnel
         shell: python
         run: |
           from pathlib import Path
@@ -105,31 +26,35 @@ jobs:
           text = path.read_text(encoding='utf-8')
           changed = False
 
-          if 'property="og:image"' not in text:
-              marker = '<meta property="og:url" content="https://namethebaby.site/" />\n'
-              insert = marker + '''  <meta property="og:image" content="https://namethebaby.site/api/og" />\n  <meta property="og:image:width" content="1200" />\n  <meta property="og:image:height" content="630" />\n  <meta property="og:image:alt" content="Name the Baby — Find it. Build it. Vote on it." />\n'''
-              if marker not in text:
-                  raise RuntimeError('Open Graph URL marker not found')
-              text = text.replace(marker, insert, 1)
+          old = 'document.querySelectorAll("[data-modal]").forEach(b=>b.addEventListener("click",()=>openModal(b.dataset.modal)));'
+          new = '''document.querySelectorAll("[data-modal]").forEach(b=>b.addEventListener("click",()=>{\n  openModal(b.dataset.modal);\n  if(b.dataset.modal==="sponsorModal")logEvent("sponsor_opened",{source:b.id||"modal_trigger"});\n}));'''
+          if old in text:
+              text = text.replace(old, new, 1)
               changed = True
 
-          if 'name="twitter:image"' not in text:
-              marker = '<meta name="twitter:description" content="Explore 1,500+ names, create new ones, shortlist favorites, and share a live family ballot." />\n'
-              insert = marker + '  <meta name="twitter:image" content="https://namethebaby.site/api/og" />\n'
-              if marker not in text:
-                  raise RuntimeError('Twitter description marker not found')
-              text = text.replace(marker, insert, 1)
+          marker = 'async function copySponsorInquiry(){'
+          if 'sponsorFormStarted=false' not in text and marker in text:
+              insert = '''let sponsorFormStarted=false;\n["sCompany","sName","sEmail","sBudget","sNote"].forEach(id=>{\n  const el=$(id);\n  if(el)el.addEventListener("focus",()=>{\n    if(!sponsorFormStarted){sponsorFormStarted=true;logEvent("sponsor_form_started",{});}\n  },{once:true});\n});\n'''
+              text = text.replace(marker, insert + marker, 1)
               changed = True
 
-          if 'V12 launch-and-growth one-page build' in text:
-              text = text.replace('V12 launch-and-growth one-page build','V13 share-ready one-page build',1)
+          old = '''$("sPackage").addEventListener("change",()=>{\n  $("packageSelected").textContent=`Selected partnership: ${$("sPackage").value}`;\n  $("packageSelected").classList.add("show");\n});'''
+          new = '''$("sPackage").addEventListener("change",()=>{\n  const packageName=$("sPackage").value;\n  $("packageSelected").textContent=`Selected partnership: ${packageName}`;\n  $("packageSelected").classList.add("show");\n  logEvent("sponsor_package_interest",{package:packageName,source:"selector"});\n});'''
+          if old in text:
+              text = text.replace(old, new, 1)
+              changed = True
+
+          old = 'if(error){console.error(error);toast("Inquiry could not be sent");return;}'
+          new = 'if(error){console.error(error);logEvent("sponsor_inquiry_error",{package:packageName});toast("Inquiry could not be sent");return;}'
+          if old in text:
+              text = text.replace(old, new, 1)
               changed = True
 
           if changed:
               path.write_text(text, encoding='utf-8')
-              print('V13 social metadata applied.')
+              print('Sponsor funnel instrumentation applied.')
           else:
-              print('Social metadata already present.')
+              print('Sponsor funnel instrumentation already present.')
 
       - name: Validate browser JavaScript
         run: |
@@ -140,27 +65,23 @@ jobs:
           m = re.search(r'<script>(.*)</script>', text, re.S)
           if not m:
               raise SystemExit('Inline script not found')
-          Path('/tmp/ntb.js').write_text(m.group(1), encoding='utf-8')
+          js = m.group(1)
+          Path('/tmp/ntb.js').write_text(js, encoding='utf-8')
+          required = ['sponsor_opened','sponsor_form_started','sponsor_package_interest','sponsor_inquiry_error','sponsor_inquiry']
+          missing = [x for x in required if x not in js]
+          if missing:
+              raise SystemExit(f'Missing sponsor events: {missing}')
           PY
           node --check /tmp/ntb.js
 
-      - name: Validate OG endpoint syntax
+      - name: Commit sponsor funnel tracking
         run: |
-          test -s api/og.jsx
-          test -s package.json
-          test -s robots.txt
-          grep -q '@vercel/og' api/og.jsx
-          grep -q '1200' api/og.jsx
-          grep -q '630' api/og.jsx
-
-      - name: Commit V13 social sharing
-        run: |
-          if git diff --quiet -- index.html package.json api/og.jsx robots.txt; then
+          if git diff --quiet -- index.html; then
             echo "No change needed."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html package.json api/og.jsx robots.txt
-          git commit -m "Add branded social sharing card"
+          git add index.html
+          git commit -m "Track sponsor conversion funnel"
           git push
