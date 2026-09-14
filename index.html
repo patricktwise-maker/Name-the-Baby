@@ -284,6 +284,24 @@
     @media(max-width:820px){.lab-grid{grid-template-columns:1fr}.lab-head{align-items:flex-start}.lab-results{min-height:300px}.lab-empty{min-height:270px}}
     @media(max-width:560px){.lab-head{display:block}.lab-badge{display:inline-block;margin-top:10px}.range-row{grid-template-columns:1fr}.lab-actions{grid-template-columns:1fr 1fr}.lab-actions .btn:first-child{grid-column:1/-1}}
 
+    .owner-key-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:14px}
+    .owner-key-row .btn{white-space:nowrap}
+    .owner-status{margin-top:10px;font-size:.78rem;color:var(--muted);min-height:20px}
+    .owner-status.good{color:#426d68;font-weight:850}
+    .owner-status.bad{color:#9a4f5f;font-weight:850}
+    .owner-dashboard{display:none;margin-top:16px}
+    .owner-dashboard.show{display:block}
+    .owner-metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+    .owner-metric{border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px}
+    .owner-metric span{display:block;color:var(--muted);font-size:.66rem;font-weight:850;text-transform:uppercase;letter-spacing:.05em}
+    .owner-metric strong{display:block;font-size:1.45rem;margin-top:4px;letter-spacing:-.04em}
+    .owner-conversions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+    .owner-conversion{border-radius:13px;padding:10px 11px;background:#f5fbfa;border:1px solid #d8ebe7;font-size:.76rem;color:#55706c}
+    .owner-conversion b{display:block;color:#426d68;font-size:1rem;margin-top:3px}
+    .owner-daily{margin-top:13px;border-top:1px solid var(--line);padding-top:11px}
+    .owner-day{display:grid;grid-template-columns:90px repeat(4,1fr);gap:6px;align-items:center;padding:5px 0;font-size:.7rem;color:var(--muted)}
+    .owner-day b{color:var(--ink)}
+    @media(max-width:700px){.owner-metrics-grid{grid-template-columns:repeat(2,1fr)}.owner-conversions{grid-template-columns:1fr}.owner-key-row{grid-template-columns:1fr}.owner-day{grid-template-columns:78px repeat(2,1fr)}.owner-day span:nth-child(4),.owner-day span:nth-child(5){display:none}}
     @media(max-width:820px){.workspace{grid-template-columns:1fr}.result-card{position:relative;top:auto}.sponsor-panel{grid-template-columns:1fr}.sponsor-badge{justify-self:stretch;width:100%}}
     @media(max-width:560px){.page{width:min(100% - 18px,1120px);padding-top:13px}.topbar{align-items:flex-start}.presented{max-width:150px}.hero{padding:35px 8px 22px}.card{padding:17px;border-radius:19px}.row2{grid-template-columns:1fr}.actions{grid-template-columns:1fr 1fr}.actions .keep{grid-column:1/-1}.battle-box{grid-template-columns:1fr}.vs{justify-self:center}.empty,.result{min-height:380px}}
   </style>
@@ -619,12 +637,13 @@
     </section>
 
     <footer>
-      V13 share-ready one-page build with 1,500 name records, live family voting, sponsor intake, monetization-ready placements, and privacy-light analytics. Popularity badges use the U.S. Social Security Administration’s exact 2025 Top 10 where available and its official 2020–2025 Top 200 recent-period rankings for broader popularity context. Name meanings, language roots, cultural notes, and generated-name constructions should receive final editorial and linguistic review before public launch.
+      V14 owner-metrics one-page build with 1,500 name records, live family voting, sponsor intake, monetization-ready placements, and privacy-light analytics. Popularity badges use the U.S. Social Security Administration’s exact 2025 Top 10 where available and its official 2020–2025 Top 200 recent-period rankings for broader popularity context. Name meanings, language roots, cultural notes, and generated-name constructions should receive final editorial and linguistic review before public launch.
       <div class="footer-links">
         <button data-modal="aboutModal">About</button>
         <button data-modal="privacyModal">Privacy</button>
         <button data-modal="termsModal">Terms</button>
         <button data-modal="sponsorModal">Sponsor</button>
+        <button data-modal="ownerMetricsModal" id="ownerMetricsBtn">Owner Metrics</button>
         <button data-modal="launchModal">Launch Status</button>
       </div>
     </footer>
@@ -695,6 +714,42 @@
       </div>
       <div class="backend-test" id="backendTestResult"></div>
       <div class="setup-secret-note"><b>Use only the browser-safe publishable key.</b> Never paste a Supabase secret/service-role key into this page. This testing panel stores the publishable configuration in this browser only.</div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="ownerMetricsModal" role="dialog" aria-modal="true" aria-labelledby="ownerMetricsTitle">
+    <div class="modal">
+      <button class="close" data-close aria-label="Close">×</button>
+      <h2 id="ownerMetricsTitle">Owner Metrics</h2>
+      <div class="sub">Private post-launch product metrics. The access key stays in this browser tab only and is never stored in the page source.</div>
+      <div class="owner-key-row">
+        <input id="ownerMetricsKey" type="password" autocomplete="new-password" placeholder="Owner access key" aria-label="Owner access key">
+        <button class="btn keep" id="loadOwnerMetrics">LOAD METRICS</button>
+      </div>
+      <div class="owner-status" id="ownerMetricsStatus">Enter the owner key to load post-launch metrics.</div>
+      <div class="owner-dashboard" id="ownerDashboard">
+        <div class="owner-metrics-grid">
+          <div class="owner-metric"><span>Visits</span><strong id="omVisits">0</strong></div>
+          <div class="owner-metric"><span>Unique sessions</span><strong id="omSessions">0</strong></div>
+          <div class="owner-metric"><span>Names generated</span><strong id="omNames">0</strong></div>
+          <div class="owner-metric"><span>Names saved</span><strong id="omSaves">0</strong></div>
+          <div class="owner-metric"><span>Ballot opens</span><strong id="omBallotViews">0</strong></div>
+          <div class="owner-metric"><span>Votes</span><strong id="omVotes">0</strong></div>
+          <div class="owner-metric"><span>Shares</span><strong id="omShares">0</strong></div>
+          <div class="owner-metric"><span>Sponsor inquiries</span><strong id="omSponsorInquiries">0</strong></div>
+        </div>
+        <div class="owner-conversions">
+          <div class="owner-conversion">Ballot open to vote<b id="omVoteRate">0%</b></div>
+          <div class="owner-conversion">Vote to share<b id="omShareRate">0%</b></div>
+          <div class="owner-conversion">Visit to save<b id="omSaveRate">0%</b></div>
+          <div class="owner-conversion">Sponsor open to inquiry<b id="omSponsorRate">0%</b></div>
+        </div>
+        <div class="owner-daily">
+          <div class="field-label"><span>Recent activity</span><span class="optional" id="omSince"></span></div>
+          <div id="omDaily"></div>
+        </div>
+        <div class="modal-actions"><button class="btn" id="refreshOwnerMetrics">REFRESH</button><button class="btn" id="clearOwnerMetricsKey">CLEAR ACCESS KEY</button></div>
+      </div>
     </div>
   </div>
 
@@ -1749,6 +1804,47 @@ function resetSurprise(){
   $("origin").value="";$("initial").value="";$("syllables").value="";$("nameLength").value="";$("endingFeel").value="";$("recentPopularity").value="";
   generate(true);$("generator").scrollIntoView({behavior:"smooth",block:"start"});
 }
+const OWNER_METRICS_SESSION_KEY="ntb_owner_metrics_key";
+function ownerMetricsKey(){return sessionStorage.getItem(OWNER_METRICS_SESSION_KEY)||"";}
+function setOwnerStatus(message,type=""){const el=$("ownerMetricsStatus");el.textContent=message;el.className=`owner-status ${type}`.trim();}
+function ownerNum(value){return Number(value||0).toLocaleString();}
+function renderOwnerMetrics(data){
+  const c=data.counts||{},v=data.conversions||{};
+  $("omVisits").textContent=ownerNum(c.page_views);
+  $("omSessions").textContent=ownerNum(c.unique_sessions);
+  $("omNames").textContent=ownerNum((c.names_generated||0)+(c.lab_generated||0));
+  $("omSaves").textContent=ownerNum(c.names_saved);
+  $("omBallotViews").textContent=ownerNum(c.ballot_views);
+  $("omVotes").textContent=ownerNum(c.ballot_votes);
+  $("omShares").textContent=ownerNum(c.ballot_shares);
+  $("omSponsorInquiries").textContent=ownerNum(c.sponsor_inquiries);
+  $("omVoteRate").textContent=`${Number(v.ballot_view_to_vote_pct||0).toFixed(1)}%`;
+  $("omShareRate").textContent=`${Number(v.vote_to_share_pct||0).toFixed(1)}%`;
+  $("omSaveRate").textContent=`${Number(v.visit_to_save_pct||0).toFixed(1)}%`;
+  $("omSponsorRate").textContent=`${Number(v.sponsor_open_to_inquiry_pct||0).toFixed(1)}%`;
+  $("omSince").textContent=data.since?`Since ${new Date(data.since).toLocaleString()}`:"";
+  const daily=$("omDaily");daily.textContent="";
+  (data.daily||[]).forEach(day=>{
+    const row=document.createElement("div");row.className="owner-day";
+    const date=document.createElement("b");date.textContent=day.date;row.appendChild(date);
+    [["Visits",day.visits],["Names",day.names],["Votes",day.votes],["Shares",day.shares]].forEach(([label,value])=>{const span=document.createElement("span");span.textContent=`${label}: ${value||0}`;row.appendChild(span);});
+    daily.appendChild(row);
+  });
+  $("ownerDashboard").classList.add("show");
+  setOwnerStatus("Owner metrics loaded.","good");
+}
+async function loadOwnerMetrics(){
+  if(!backendReady()){setOwnerStatus("Live backend is unavailable.","bad");return;}
+  const key=$("ownerMetricsKey").value.trim()||ownerMetricsKey();
+  if(!key){setOwnerStatus("Enter the owner access key.","bad");return;}
+  $("loadOwnerMetrics").disabled=true;$("refreshOwnerMetrics").disabled=true;setOwnerStatus("Loading metrics...");
+  const {data,error}=await ntbRpc("get_owner_metrics",{p_owner_key:key});
+  $("loadOwnerMetrics").disabled=false;$("refreshOwnerMetrics").disabled=false;
+  if(error||!data?.ok){sessionStorage.removeItem(OWNER_METRICS_SESSION_KEY);$("ownerDashboard").classList.remove("show");setOwnerStatus("Access key was not accepted.","bad");return;}
+  sessionStorage.setItem(OWNER_METRICS_SESSION_KEY,key);
+  renderOwnerMetrics(data);
+}
+function clearOwnerMetricsAccess(){sessionStorage.removeItem(OWNER_METRICS_SESSION_KEY);$("ownerMetricsKey").value="";$("ownerDashboard").classList.remove("show");setOwnerStatus("Owner access cleared from this browser tab.");}
 function openModal(id){const m=$(id);if(!m)return;m.classList.add("show");m.querySelector("input,button,select,textarea")?.focus();}
 function closeModal(m){m.classList.remove("show");}
 document.querySelectorAll("[data-modal]").forEach(b=>b.addEventListener("click",()=>{
@@ -1827,6 +1923,12 @@ if($("sponsorBtn"))$("sponsorBtn").addEventListener("click",()=>{openModal("spon
 $("copySponsor").addEventListener("click",copySponsorInquiry);
 $("saveBackendConfig").addEventListener("click",saveAndTestBackend);
 $("clearBackendConfig").addEventListener("click",clearBackendConfig);
+$("loadOwnerMetrics").addEventListener("click",loadOwnerMetrics);
+$("refreshOwnerMetrics").addEventListener("click",loadOwnerMetrics);
+$("clearOwnerMetricsKey").addEventListener("click",clearOwnerMetricsAccess);
+$("ownerMetricsKey").addEventListener("keydown",e=>{if(e.key==="Enter")loadOwnerMetrics();});
+$("ownerMetricsBtn").addEventListener("click",()=>{const key=ownerMetricsKey();if(key){$("ownerMetricsKey").value=key;loadOwnerMetrics();}});
+
 
 
 $("jumpLab").addEventListener("click",()=>$("creationLab").scrollIntoView({behavior:"smooth",block:"start"}));
