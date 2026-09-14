@@ -1,4 +1,4 @@
-name: V16 retention and re-engagement
+name: V17 Google SEO and discoverability
 
 on:
   push:
@@ -11,34 +11,45 @@ permissions:
   contents: write
 
 jobs:
-  retention:
+  google_discovery:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Apply V16 retention patch
-        run: python .github/scripts/v16_patch.py
+      - name: Apply V17 Google discovery patch
+        run: python .github/scripts/v17_patch.py
 
-      - name: Validate browser JavaScript
+      - name: Validate SEO and browser JavaScript
         run: |
           python - <<'PY'
           from pathlib import Path
           import re
+          import xml.etree.ElementTree as ET
           text = Path('index.html').read_text(encoding='utf-8')
           m = re.search(r'<script>(.*)</script>', text, re.S)
           if not m:
               raise SystemExit('Inline script not found')
-          js = m.group(1)
-          required = ['initReturnExperience','return_visit','resume_shortlist','recent_name_revisited','omReturningVisitors']
+          Path('/tmp/ntb.js').write_text(m.group(1), encoding='utf-8')
+          required = [
+              'Baby Name Generator, Creator & Family Poll | Name the Baby',
+              'application/ld+json',
+              '"@type": "WebSite"',
+              'id="babyNameTools"',
+              'Baby name generator',
+              'Family baby name poll'
+          ]
           missing = [x for x in required if x not in text]
           if missing:
-              raise SystemExit(f'Missing V16 pieces: {missing}')
-          Path('/tmp/ntb.js').write_text(js, encoding='utf-8')
+              raise SystemExit(f'Missing V17 SEO pieces: {missing}')
+          ET.parse('sitemap.xml')
+          robots = Path('robots.txt').read_text(encoding='utf-8')
+          if 'Sitemap: https://namethebaby.site/sitemap.xml' not in robots:
+              raise SystemExit('robots.txt does not advertise sitemap')
           PY
           node --check /tmp/ntb.js
 
-      - name: Commit V16 retention experience
+      - name: Commit V17 Google discovery
         run: |
           if git diff --quiet -- index.html; then
             echo "No change needed."
@@ -47,5 +58,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Add retention and re-engagement experience"
+          git commit -m "Add Google SEO and search discovery foundation"
           git push
