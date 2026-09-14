@@ -1,4 +1,4 @@
-name: Polish V11 live ballot experience
+name: Add launch metadata and ballot analytics
 
 on:
   push:
@@ -11,13 +11,13 @@ permissions:
   contents: write
 
 jobs:
-  polish:
+  launch_polish:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Polish ballot prompt and selected state
+      - name: Add metadata and ballot view analytics
         shell: python
         run: |
           from pathlib import Path
@@ -26,45 +26,46 @@ jobs:
           text = path.read_text(encoding='utf-8')
           changed = False
 
-          replacements = [
-            (
-              '$("voteNote").textContent=live?(hasPrior?"Your browser has already voted. You may change that one vote.":"Vote to reveal the live results."):"";',
-              '$("voteNote").textContent=live&&hasPrior?"Your browser has already voted. You may change that one vote.":"";'
-            ),
-            (
-              '$("ballotOptions").innerHTML=options.map(o=>`<button class="ballot-name ${activeBallotVote===o.name?"chosen":""}" data-ballotname="${esc(o.name)}">${esc(o.name)}</button>`).join("");',
-              '$("ballotOptions").innerHTML=options.map(o=>`<button class="ballot-name ${activeBallotVote===o.name?"chosen":""}" data-ballotname="${esc(o.name)}" aria-pressed="${activeBallotVote===o.name?"true":"false"}">${esc(o.name)}</button>`).join("");'
-            ),
-            (
-              '$("ballotOptions").querySelectorAll(".ballot-name").forEach(b=>b.classList.toggle("chosen",b.dataset.ballotname===name));',
-              '$("ballotOptions").querySelectorAll(".ballot-name").forEach(b=>{const chosen=b.dataset.ballotname===name;b.classList.toggle("chosen",chosen);b.setAttribute("aria-pressed",chosen?"true":"false");});'
-            ),
-            (
-              '$("voteNote").textContent="Your vote is saved. Tap another name if you want to change it.";',
-              '$("voteNote").textContent="Vote recorded. Tap another name if you want to change your one vote.";'
-            ),
-            (
-              'activeBallot.live?`Your one vote for ${name} is saved and the live totals are updated.`',
-              'activeBallot.live?`Your vote for ${name} is saved. The live totals above are updated.`'
-            ),
-            (
-              'V11 public-launch one-page build',
-              'V11.1 public-launch one-page build'
-            ),
-          ]
+          if 'rel="canonical"' not in text:
+              marker = '<meta name="theme-color" content="#fff8f2" />\n'
+              insert = '''<meta name="theme-color" content="#fff8f2" />\n  <meta name="application-name" content="Name the Baby" />\n  <meta name="robots" content="index,follow,max-image-preview:large" />\n  <link rel="canonical" href="https://name-the-baby-tlae.vercel.app/" />\n  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2718%27 fill=%27%23ff8ea3%27/%3E%3Ctext x=%2732%27 y=%2742%27 text-anchor=%27middle%27 font-size=%2734%27 font-family=%27Arial,sans-serif%27 font-weight=%27900%27 fill=%27%23241f2a%27%3EN%3C/text%3E%3C/svg%3E" />\n'''
+              text = text.replace(marker, insert, 1)
+              changed = True
 
-          for old, new in replacements:
-              if old in text:
-                  text = text.replace(old, new, 1)
-                  changed = True
-              else:
-                  print('Pattern already changed or not found:', old[:80])
+          if 'property="og:site_name"' not in text:
+              text = text.replace(
+                  '<meta property="og:type" content="website" />',
+                  '<meta property="og:type" content="website" />\n  <meta property="og:site_name" content="Name the Baby" />\n  <meta property="og:url" content="https://name-the-baby-tlae.vercel.app/" />',
+                  1
+              )
+              changed = True
+
+          if 'name="twitter:title"' not in text:
+              text = text.replace(
+                  '<meta name="twitter:card" content="summary_large_image" />',
+                  '<meta name="twitter:card" content="summary_large_image" />\n  <meta name="twitter:title" content="Name the Baby" />\n  <meta name="twitter:description" content="Explore 1,500+ names, create new ones, shortlist favorites, and share a live family ballot." />',
+                  1
+              )
+              changed = True
+
+          old_poll = '''  const {data,error}=await ntbRpc("get_name_poll",{p_code:code});\n  if(error||!data){console.error(error);toast("That live ballot could not be loaded");return false;}\n  return renderBallot(data,{live:true,afterVote:false});'''
+          new_poll = '''  const {data,error}=await ntbRpc("get_name_poll",{p_code:code});\n  if(error||!data){console.error(error);toast("That live ballot could not be loaded");return false;}\n  logEvent("ballot_view",{option_count:(data.options||[]).length,code_present:true});\n  return renderBallot(data,{live:true,afterVote:false});'''
+          if old_poll in text:
+              text = text.replace(old_poll, new_poll, 1)
+              changed = True
+
+          if 'V11.1 public-launch one-page build' in text:
+              text = text.replace('V11.1 public-launch one-page build','V11.2 public-launch one-page build',1)
+              changed = True
+          elif 'V11 public-launch one-page build' in text:
+              text = text.replace('V11 public-launch one-page build','V11.2 public-launch one-page build',1)
+              changed = True
 
           if changed:
               path.write_text(text, encoding='utf-8')
-              print('Ballot polish applied.')
+              print('Launch metadata and analytics added.')
           else:
-              print('No ballot polish changes needed.')
+              print('No changes needed.')
 
       - name: Validate JavaScript
         run: |
@@ -79,7 +80,7 @@ jobs:
           PY
           node --check /tmp/ntb.js
 
-      - name: Commit ballot polish
+      - name: Commit launch polish
         run: |
           if git diff --quiet -- index.html; then
             echo "No change needed."
@@ -88,5 +89,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Polish live ballot confirmation"
+          git commit -m "Add launch metadata and ballot analytics"
           git push
