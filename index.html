@@ -601,7 +601,7 @@
     </section>
 
     <footer>
-      V11 public-launch one-page build with 1,500 name records, live family voting, sponsor intake, monetization-ready placements, and privacy-light analytics. Popularity badges use the U.S. Social Security Administration’s exact 2025 Top 10 where available and its official 2020–2025 Top 200 recent-period rankings for broader popularity context. Name meanings, language roots, cultural notes, and generated-name constructions should receive final editorial and linguistic review before public launch.
+      V11.1 public-launch one-page build with 1,500 name records, live family voting, sponsor intake, monetization-ready placements, and privacy-light analytics. Popularity badges use the U.S. Social Security Administration’s exact 2025 Top 10 where available and its official 2020–2025 Top 200 recent-period rankings for broader popularity context. Name meanings, language roots, cultural notes, and generated-name constructions should receive final editorial and linguistic review before public launch.
       <div class="footer-links">
         <button data-modal="aboutModal">About</button>
         <button data-modal="privacyModal">Privacy</button>
@@ -1601,14 +1601,14 @@ function renderBallot(data,{live=false,afterVote=false}={}){
   $("ballotSub").textContent=family?`${family} sent you their shortlist. Pick the name you like best.`:"Someone sent you their shortlist. Pick the name you like best.";
   $("ballotCode").hidden=!live||!data.code;
   $("ballotCode").textContent=live&&data.code?`Live ballot · ${data.code}`:"";
-  $("ballotOptions").innerHTML=options.map(o=>`<button class="ballot-name ${activeBallotVote===o.name?"chosen":""}" data-ballotname="${esc(o.name)}">${esc(o.name)}</button>`).join("");
+  $("ballotOptions").innerHTML=options.map(o=>`<button class="ballot-name ${activeBallotVote===o.name?"chosen":""}" data-ballotname="${esc(o.name)}" aria-pressed="${activeBallotVote===o.name?"true":"false"}">${esc(o.name)}</button>`).join("");
   const hasPrior=Boolean(activeBallotVote);
   $("ballotAfter").classList.toggle("show",hasPrior);
   if(hasPrior){
     $("ballotVoteResult").textContent=`Your vote: ${activeBallotVote}`;
     $("ballotVoteCopy").textContent="This browser already voted on this ballot. Tap another name if you want to change your vote.";
   }
-  $("voteNote").textContent=live?(hasPrior?"Your browser has already voted. You may change that one vote.":"Vote to reveal the live results."):"";
+  $("voteNote").textContent=live&&hasPrior?"Your browser has already voted. You may change that one vote.":"";
   renderBallotStats(live&&(afterVote||hasPrior));
   setTimeout(()=>$("ballotPanel").scrollIntoView({behavior:"smooth",block:"start"}),100);
   return true;
@@ -1647,19 +1647,19 @@ async function castBallotVote(name){
   if(!activeBallot)return;
   const prior=activeBallotVote;
   activeBallotVote=name;
-  $("ballotOptions").querySelectorAll(".ballot-name").forEach(b=>b.classList.toggle("chosen",b.dataset.ballotname===name));
+  $("ballotOptions").querySelectorAll(".ballot-name").forEach(b=>{const chosen=b.dataset.ballotname===name;b.classList.toggle("chosen",chosen);b.setAttribute("aria-pressed",chosen?"true":"false");});
   if(activeBallot.live){
     const {data,error}=await ntbRpc("cast_name_vote",{p_code:activeBallot.code,p_name:name,p_voter_token:voterToken()});
     if(error||!data){console.error(error);activeBallotVote=prior;toast("Vote could not be saved");return;}
     rememberBallotVote(activeBallot.code,name);
     activeBallot={...data,live:true,options:data.options||[]};
     renderBallotStats(true);
-    $("voteNote").textContent="Your vote is saved. Tap another name if you want to change it.";
+    $("voteNote").textContent="Vote recorded. Tap another name if you want to change your one vote.";
     logEvent(prior&&prior!==name?"ballot_vote_changed":"ballot_vote",{option_count:(data.options||[]).length,total_votes:Number(data.total_votes||0)});
   }
   $("ballotVoteResult").textContent=prior&&prior!==name?`Vote changed to ${name}`:`Your vote: ${name}`;
   const target=activeBallot.label||"the baby";
-  $("ballotVoteCopy").textContent=activeBallot.live?`Your one vote for ${name} is saved and the live totals are updated.`:`You picked ${name} for ${target}. This demo ballot does not aggregate votes across devices.`;
+  $("ballotVoteCopy").textContent=activeBallot.live?`Your vote for ${name} is saved. The live totals above are updated.`:`You picked ${name} for ${target}. This demo ballot does not aggregate votes across devices.`;
   $("ballotAfter").classList.add("show");
 }
 async function shareBallotVote(){
