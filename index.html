@@ -6,14 +6,14 @@
   <meta name="theme-color" content="#fff8f2" />
   <meta name="application-name" content="Name the Baby" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
-  <link rel="canonical" href="https://name-the-baby-tlae.vercel.app/" />
+  <link rel="canonical" href="https://namethebaby.site/" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2718%27 fill=%27%23ff8ea3%27/%3E%3Ctext x=%2732%27 y=%2742%27 text-anchor=%27middle%27 font-size=%2734%27 font-family=%27Arial,sans-serif%27 font-weight=%27900%27 fill=%27%23241f2a%27%3EN%3C/text%3E%3C/svg%3E" />
   <meta name="description" content="Name the Baby is a one-page baby name finder and creation lab with smart recommendations, live family voting, custom names, saved favorites, and Name Battle." />
   <meta property="og:title" content="Name the Baby" />
   <meta property="og:description" content="One tiny human. One very big decision. Explore 1,500+ names, create new ones, shortlist favorites, and share a family ballot." />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Name the Baby" />
-  <meta property="og:url" content="https://name-the-baby-tlae.vercel.app/" />
+  <meta property="og:url" content="https://namethebaby.site/" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Name the Baby" />
   <meta name="twitter:description" content="Explore 1,500+ names, create new ones, shortlist favorites, and share a live family ballot." />
@@ -1535,7 +1535,7 @@ function ballotBaseUrl(){
   const u=new URL(location.href);
   u.hash="";u.searchParams.delete("poll");
   const qs=u.searchParams.toString();
-  return `${u.origin}${u.pathname}${qs?`?${qs}`:""}`;
+  return `${PUBLIC_SITE_ORIGIN}${u.pathname}${qs?`?${qs}`:""}`;
 }
 function liveBallotUrl(code){
   const u=new URL(ballotBaseUrl());
@@ -1637,6 +1637,7 @@ function renderBallot(data,{live=false,afterVote=false}={}){
   setTimeout(()=>$("ballotPanel").scrollIntoView({behavior:"smooth",block:"start"}),100);
   return true;
 }
+const PUBLIC_SITE_ORIGIN="https://namethebaby.site";
 const DEFAULT_PAGE_TITLE="Name the Baby";
 const DEFAULT_PAGE_DESCRIPTION="Name the Baby is a one-page baby name finder and creation lab with smart recommendations, live family voting, custom names, saved favorites, and Name Battle.";
 function setBallotDocumentContext(data){
