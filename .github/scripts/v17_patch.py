@@ -70,7 +70,7 @@ required = [
     'id="babyNameTools"',
     'Baby name generator',
     'Family baby name poll',
-    'baby name creator with meanings'
+    'Baby name creator with meanings'
 ]
 missing = [x for x in required if x not in text]
 if missing:
