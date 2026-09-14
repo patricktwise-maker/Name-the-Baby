@@ -1,4 +1,4 @@
-name: V12 launch and growth update
+name: Switch production branding to namethebaby.site
 
 on:
   push:
@@ -11,13 +11,13 @@ permissions:
   contents: write
 
 jobs:
-  v12:
+  custom_domain:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Upgrade public site to V12
+      - name: Make namethebaby.site the public domain
         shell: python
         run: |
           from pathlib import Path
@@ -26,82 +26,32 @@ jobs:
           text = path.read_text(encoding='utf-8')
           changed = False
 
-          if '.live-sync{' not in text:
-              old = '.vote-note{margin-top:8px;font-size:.72rem;color:var(--muted);line-height:1.4}'
-              new = '''.vote-note{margin-top:8px;font-size:.72rem;color:var(--muted);line-height:1.4}\n    .live-sync{display:none;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding:9px 11px;border:1px solid #d8ebe7;background:#f5fbfa;border-radius:12px;font-size:.72rem;color:#55706c}\n    .live-sync.show{display:flex}\n    .live-sync button{border:1px solid #cfe3df;background:#fff;border-radius:999px;padding:6px 9px;font-size:.67rem;font-weight:900;color:#426d68;cursor:pointer}\n    .live-sync button:disabled{opacity:.55;cursor:default}'''
-              text = text.replace(old, new, 1)
+          old_domain = 'https://name-the-baby-tlae.vercel.app'
+          new_domain = 'https://namethebaby.site'
+          if old_domain in text:
+              text = text.replace(old_domain, new_domain)
               changed = True
 
-          if 'id="liveSync"' not in text:
-              old = '''      <div class="vote-note" id="voteNote"></div>\n      <div class="ballot-after" id="ballotAfter">'''
-              new = '''      <div class="vote-note" id="voteNote"></div>\n      <div class="live-sync" id="liveSync"><span id="liveSyncText">Live results update automatically.</span><button id="refreshBallotBtn" type="button">REFRESH</button></div>\n      <div class="ballot-after" id="ballotAfter">'''
-              text = text.replace(old, new, 1)
+          marker = 'const DEFAULT_PAGE_TITLE="Name the Baby";'
+          public_origin = 'const PUBLIC_SITE_ORIGIN="https://namethebaby.site";\n'
+          if 'const PUBLIC_SITE_ORIGIN=' not in text and marker in text:
+              text = text.replace(marker, public_origin + marker, 1)
               changed = True
 
-          if 'V11.2 public-launch one-page build' in text:
-              text = text.replace('V11.2 public-launch one-page build','V12 launch-and-growth one-page build',1)
+          old_return = 'return `${u.origin}${u.pathname}${qs?`?${qs}`:""}`;'
+          new_return = 'return `${PUBLIC_SITE_ORIGIN}${u.pathname}${qs?`?${qs}`:""}`;'
+          if old_return in text:
+              text = text.replace(old_return, new_return, 1)
               changed = True
 
-          old_base = '''function ballotBaseUrl(){\n  return `${location.origin}${location.pathname}${location.search||""}`;\n}'''
-          new_base = '''function ballotBaseUrl(){\n  const u=new URL(location.href);\n  u.hash="";u.searchParams.delete("poll");\n  const qs=u.searchParams.toString();\n  return `${u.origin}${u.pathname}${qs?`?${qs}`:""}`;\n}\nfunction liveBallotUrl(code){\n  const u=new URL(ballotBaseUrl());\n  u.searchParams.set("poll",code);\n  return u.toString();\n}'''
-          if old_base in text:
-              text = text.replace(old_base, new_base, 1)
-              changed = True
-
-          old_share_url = 'if(code)return `${ballotBaseUrl()}#poll=${encodeURIComponent(code)}`;'
-          if old_share_url in text:
-              text = text.replace(old_share_url, 'if(code)return liveBallotUrl(code);', 1)
-              changed = True
-
-          if 'let activeBallot=null,activeBallotVote="";' in text:
-              text = text.replace('let activeBallot=null,activeBallotVote="";','let activeBallot=null,activeBallotVote="",ballotSyncTimer=null;',1)
-              changed = True
-
-          old_render = '''  $("voteNote").textContent=live&&hasPrior?"Your browser has already voted. You may change that one vote.":"";\n  renderBallotStats(live&&(afterVote||hasPrior));\n  setTimeout(()=>$("ballotPanel").scrollIntoView({behavior:"smooth",block:"start"}),100);\n  return true;\n}'''
-          new_render = '''  $("voteNote").textContent=live&&hasPrior?"Your browser has already voted. You may change that one vote.":"";\n  $("liveSync").classList.toggle("show",live&&hasPrior);\n  setBallotDocumentContext(data);\n  renderBallotStats(live&&(afterVote||hasPrior));\n  if(live&&hasPrior)startBallotSync();\n  setTimeout(()=>$("ballotPanel").scrollIntoView({behavior:"smooth",block:"start"}),100);\n  return true;\n}'''
-          if old_render in text:
-              text = text.replace(old_render, new_render, 1)
-              changed = True
-
-          if 'async function refreshLiveBallot' not in text:
-              marker = 'function renderBallotStats(show=false){'
-              helpers = '''const DEFAULT_PAGE_TITLE="Name the Baby";\nconst DEFAULT_PAGE_DESCRIPTION="Name the Baby is a one-page baby name finder and creation lab with smart recommendations, live family voting, custom names, saved favorites, and Name Battle.";\nfunction setBallotDocumentContext(data){\n  const label=(data?.label||"").trim(),family=(data?.family||"").trim();\n  document.title=label?`Vote on ${label} | Name the Baby`:"Baby Name Vote | Name the Baby";\n  const desc=family?`${family} want your help choosing a baby name. Cast your vote on Name the Baby.`:"Cast your vote on a shared baby-name shortlist.";\n  const meta=document.querySelector('meta[name="description"]');if(meta)meta.content=desc;\n  const ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=document.title;\n  const ogDesc=document.querySelector('meta[property="og:description"]');if(ogDesc)ogDesc.content=desc;\n}\nfunction resetDocumentContext(){\n  document.title=DEFAULT_PAGE_TITLE;\n  const meta=document.querySelector('meta[name="description"]');if(meta)meta.content=DEFAULT_PAGE_DESCRIPTION;\n  const ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=DEFAULT_PAGE_TITLE;\n  const ogDesc=document.querySelector('meta[property="og:description"]');if(ogDesc)ogDesc.content="One tiny human. One very big decision. Explore 1,500+ names, create new ones, shortlist favorites, and share a family ballot.";\n}\nfunction stopBallotSync(){if(ballotSyncTimer){clearInterval(ballotSyncTimer);ballotSyncTimer=null;}}\nasync function refreshLiveBallot({quiet=false}={}){\n  if(!activeBallot?.live||!activeBallot.code)return false;\n  const btn=$("refreshBallotBtn");if(btn)btn.disabled=true;\n  const {data,error}=await ntbRpc("get_name_poll",{p_code:activeBallot.code});\n  if(btn)btn.disabled=false;\n  if(error||!data){if(!quiet)toast("Live results could not refresh");return false;}\n  activeBallot={...data,live:true,options:data.options||[]};\n  renderBallotStats(true);\n  $("liveSync").classList.add("show");\n  $("liveSyncText").textContent=`Live results updated ${new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"})}.`;\n  if(!quiet)toast("Live results refreshed");\n  return true;\n}\nfunction startBallotSync(){\n  stopBallotSync();\n  if(!activeBallot?.live)return;\n  $("liveSync").classList.add("show");\n  ballotSyncTimer=setInterval(()=>{if(!document.hidden)refreshLiveBallot({quiet:true});},20000);\n}\n'''
-              text = text.replace(marker, helpers + marker, 1)
-              changed = True
-
-          old_load = '''async function loadBallotFromHash(){\n  if(location.hash.startsWith("#poll=")){\n    const code=decodeURIComponent(location.hash.slice(6)).trim();\n    if(code&&await loadLivePoll(code))return true;\n  }\n  if(!location.hash.startsWith("#vote="))return false;\n  const data=decodeBallot(location.hash.slice(6));if(!data||!Array.isArray(data.names))return false;\n  const names=[...new Set(data.names.filter(n=>typeof n==="string"&&n.trim()).map(n=>n.trim()))].slice(0,6);if(names.length<2)return false;\n  return renderBallot({...data,names},{live:false});\n}'''
-          new_load = '''async function loadBallotFromLocation(){\n  const queryCode=new URL(location.href).searchParams.get("poll");\n  if(queryCode&&await loadLivePoll(queryCode.trim()))return true;\n  if(location.hash.startsWith("#poll=")){\n    const code=decodeURIComponent(location.hash.slice(6)).trim();\n    if(code&&await loadLivePoll(code)){\n      history.replaceState(null,"",liveBallotUrl(code));\n      return true;\n    }\n  }\n  if(!location.hash.startsWith("#vote="))return false;\n  const data=decodeBallot(location.hash.slice(6));if(!data||!Array.isArray(data.names))return false;\n  const names=[...new Set(data.names.filter(n=>typeof n==="string"&&n.trim()).map(n=>n.trim()))].slice(0,6);if(names.length<2)return false;\n  return renderBallot({...data,names},{live:false});\n}'''
-          if old_load in text:
-              text = text.replace(old_load, new_load, 1)
-              changed = True
-
-          old_vote = '''    renderBallotStats(true);\n    $("voteNote").textContent="Vote recorded. Tap another name if you want to change your one vote.";'''
-          new_vote = '''    renderBallotStats(true);\n    $("liveSync").classList.add("show");startBallotSync();\n    $("liveSyncText").textContent="Live results update automatically every 20 seconds.";\n    $("voteNote").textContent="Vote recorded. Tap another name if you want to change your one vote.";'''
-          if old_vote in text:
-              text = text.replace(old_vote, new_vote, 1)
-              changed = True
-
-          old_share = '''async function shareBallotVote(){\n  if(!activeBallotVote||!activeBallot)return;const family=activeBallot.family?` for ${activeBallot.family}`:"";const text=`My vote${family}: ${activeBallotVote}.`;const url=location.href;\n  try{if(navigator.share)await navigator.share({title:"My Name the Baby vote",text,url});else{await navigator.clipboard.writeText(`${text}\\n${url}`);toast("Your vote was copied");}}catch(e){}\n}'''
-          new_share = '''async function shareBallotVote(){\n  if(!activeBallotVote||!activeBallot)return;const family=activeBallot.family?` for ${activeBallot.family}`:"";const text=`I voted ${activeBallotVote}${family}. Cast your vote on Name the Baby.`;const url=activeBallot.live?liveBallotUrl(activeBallot.code):location.href;\n  try{if(navigator.share)await navigator.share({title:"Help Us Name the Baby",text,url});else{await navigator.clipboard.writeText(`${text}\\n${url}`);toast("Vote and ballot link copied");}logEvent("ballot_shared",{live:Boolean(activeBallot.live)});}catch(e){}\n}'''
-          if old_share in text:
-              text = text.replace(old_share, new_share, 1)
-              changed = True
-
-          old_own = 'function startOwnSession(){history.replaceState(null,"",ballotBaseUrl());$("ballotPanel").classList.remove("show");$("generator").scrollIntoView({behavior:"smooth",block:"start"});}'
-          new_own = 'function startOwnSession(){stopBallotSync();history.replaceState(null,"",ballotBaseUrl());$("ballotPanel").classList.remove("show");resetDocumentContext();$("generator").scrollIntoView({behavior:"smooth",block:"start"});}'
-          if old_own in text:
-              text = text.replace(old_own, new_own, 1)
-              changed = True
-
-          old_start = '''renderShortlist();renderLearning();\nwindow.addEventListener("hashchange",()=>loadBallotFromHash());\nrenderBackendStatus();\nlogEvent("page_view",{mode:location.hash.startsWith("#poll=")?"poll":location.hash.startsWith("#vote=")?"demo_poll":"main"});\nloadBallotFromHash();'''
-          new_start = '''renderShortlist();renderLearning();\n$("refreshBallotBtn").addEventListener("click",()=>refreshLiveBallot());\nwindow.addEventListener("hashchange",()=>loadBallotFromLocation());\nwindow.addEventListener("popstate",()=>loadBallotFromLocation());\ndocument.addEventListener("visibilitychange",()=>{if(!document.hidden&&activeBallot?.live&&activeBallotVote)refreshLiveBallot({quiet:true});});\nrenderBackendStatus();\nconst startupPoll=new URL(location.href).searchParams.get("poll")||location.hash.startsWith("#poll=");\nlogEvent("page_view",{mode:startupPoll?"poll":location.hash.startsWith("#vote=")?"demo_poll":"main"});\nloadBallotFromLocation();'''
-          if old_start in text:
-              text = text.replace(old_start, new_start, 1)
-              changed = True
+          if old_domain in text:
+              raise RuntimeError('Old Vercel public domain still remains in index.html')
+          if 'https://namethebaby.site' not in text:
+              raise RuntimeError('Custom domain was not written to index.html')
 
           if changed:
               path.write_text(text, encoding='utf-8')
-              print('V12 update applied.')
+              print('Custom domain migration applied.')
           else:
               print('No changes needed.')
 
@@ -118,7 +68,7 @@ jobs:
           PY
           node --check /tmp/ntb.js
 
-      - name: Commit V12
+      - name: Commit custom-domain migration
         run: |
           if git diff --quiet -- index.html; then
             echo "No change needed."
@@ -127,5 +77,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Release V12 launch and growth update"
+          git commit -m "Use namethebaby.site as public domain"
           git push
