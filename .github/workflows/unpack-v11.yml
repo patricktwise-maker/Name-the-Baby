@@ -1,4 +1,4 @@
-name: V13 sponsor conversion tracking
+name: V14 secure owner metrics
 
 on:
   push:
@@ -11,13 +11,13 @@ permissions:
   contents: write
 
 jobs:
-  sponsor_funnel:
+  owner_metrics:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Instrument sponsor conversion funnel
+      - name: Add secure owner metrics panel
         shell: python
         run: |
           from pathlib import Path
@@ -26,35 +26,54 @@ jobs:
           text = path.read_text(encoding='utf-8')
           changed = False
 
-          old = 'document.querySelectorAll("[data-modal]").forEach(b=>b.addEventListener("click",()=>openModal(b.dataset.modal)));'
-          new = '''document.querySelectorAll("[data-modal]").forEach(b=>b.addEventListener("click",()=>{\n  openModal(b.dataset.modal);\n  if(b.dataset.modal==="sponsorModal")logEvent("sponsor_opened",{source:b.id||"modal_trigger"});\n}));'''
-          if old in text:
-              text = text.replace(old, new, 1)
+          if '.owner-metrics-grid{' not in text:
+              marker = '    @media(max-width:820px){.workspace{grid-template-columns:1fr}.result-card{position:relative;top:auto}.sponsor-panel{grid-template-columns:1fr}.sponsor-badge{justify-self:stretch;width:100%}}\n'
+              css = '''    .owner-key-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:14px}\n    .owner-key-row .btn{white-space:nowrap}\n    .owner-status{margin-top:10px;font-size:.78rem;color:var(--muted);min-height:20px}\n    .owner-status.good{color:#426d68;font-weight:850}\n    .owner-status.bad{color:#9a4f5f;font-weight:850}\n    .owner-dashboard{display:none;margin-top:16px}\n    .owner-dashboard.show{display:block}\n    .owner-metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}\n    .owner-metric{border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px}\n    .owner-metric span{display:block;color:var(--muted);font-size:.66rem;font-weight:850;text-transform:uppercase;letter-spacing:.05em}\n    .owner-metric strong{display:block;font-size:1.45rem;margin-top:4px;letter-spacing:-.04em}\n    .owner-conversions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}\n    .owner-conversion{border-radius:13px;padding:10px 11px;background:#f5fbfa;border:1px solid #d8ebe7;font-size:.76rem;color:#55706c}\n    .owner-conversion b{display:block;color:#426d68;font-size:1rem;margin-top:3px}\n    .owner-daily{margin-top:13px;border-top:1px solid var(--line);padding-top:11px}\n    .owner-day{display:grid;grid-template-columns:90px repeat(4,1fr);gap:6px;align-items:center;padding:5px 0;font-size:.7rem;color:var(--muted)}\n    .owner-day b{color:var(--ink)}\n    @media(max-width:700px){.owner-metrics-grid{grid-template-columns:repeat(2,1fr)}.owner-conversions{grid-template-columns:1fr}.owner-key-row{grid-template-columns:1fr}.owner-day{grid-template-columns:78px repeat(2,1fr)}.owner-day span:nth-child(4),.owner-day span:nth-child(5){display:none}}\n'''
+              if marker not in text:
+                  raise RuntimeError('CSS insertion marker not found')
+              text = text.replace(marker, css + marker, 1)
               changed = True
 
-          marker = 'async function copySponsorInquiry(){'
-          if 'sponsorFormStarted=false' not in text and marker in text:
-              insert = '''let sponsorFormStarted=false;\n["sCompany","sName","sEmail","sBudget","sNote"].forEach(id=>{\n  const el=$(id);\n  if(el)el.addEventListener("focus",()=>{\n    if(!sponsorFormStarted){sponsorFormStarted=true;logEvent("sponsor_form_started",{});}\n  },{once:true});\n});\n'''
-              text = text.replace(marker, insert + marker, 1)
+          footer_marker = '        <button data-modal="launchModal">Launch Status</button>\n'
+          if 'id="ownerMetricsBtn"' not in text:
+              if footer_marker not in text:
+                  raise RuntimeError('Footer insertion marker not found')
+              text = text.replace(footer_marker, '        <button data-modal="ownerMetricsModal" id="ownerMetricsBtn">Owner Metrics</button>\n' + footer_marker, 1)
               changed = True
 
-          old = '''$("sPackage").addEventListener("change",()=>{\n  $("packageSelected").textContent=`Selected partnership: ${$("sPackage").value}`;\n  $("packageSelected").classList.add("show");\n});'''
-          new = '''$("sPackage").addEventListener("change",()=>{\n  const packageName=$("sPackage").value;\n  $("packageSelected").textContent=`Selected partnership: ${packageName}`;\n  $("packageSelected").classList.add("show");\n  logEvent("sponsor_package_interest",{package:packageName,source:"selector"});\n});'''
-          if old in text:
-              text = text.replace(old, new, 1)
+          if 'id="ownerMetricsModal"' not in text:
+              marker = '  <div class="toast" id="toast"></div>\n'
+              modal = '''  <div class="modal-backdrop" id="ownerMetricsModal" role="dialog" aria-modal="true" aria-labelledby="ownerMetricsTitle">\n    <div class="modal">\n      <button class="close" data-close aria-label="Close">×</button>\n      <h2 id="ownerMetricsTitle">Owner Metrics</h2>\n      <div class="sub">Private post-launch product metrics. The access key stays in this browser tab only and is never stored in the page source.</div>\n      <div class="owner-key-row">\n        <input id="ownerMetricsKey" type="password" autocomplete="new-password" placeholder="Owner access key" aria-label="Owner access key">\n        <button class="btn keep" id="loadOwnerMetrics">LOAD METRICS</button>\n      </div>\n      <div class="owner-status" id="ownerMetricsStatus">Enter the owner key to load post-launch metrics.</div>\n      <div class="owner-dashboard" id="ownerDashboard">\n        <div class="owner-metrics-grid">\n          <div class="owner-metric"><span>Visits</span><strong id="omVisits">0</strong></div>\n          <div class="owner-metric"><span>Unique sessions</span><strong id="omSessions">0</strong></div>\n          <div class="owner-metric"><span>Names generated</span><strong id="omNames">0</strong></div>\n          <div class="owner-metric"><span>Names saved</span><strong id="omSaves">0</strong></div>\n          <div class="owner-metric"><span>Ballot opens</span><strong id="omBallotViews">0</strong></div>\n          <div class="owner-metric"><span>Votes</span><strong id="omVotes">0</strong></div>\n          <div class="owner-metric"><span>Shares</span><strong id="omShares">0</strong></div>\n          <div class="owner-metric"><span>Sponsor inquiries</span><strong id="omSponsorInquiries">0</strong></div>\n        </div>\n        <div class="owner-conversions">\n          <div class="owner-conversion">Ballot open to vote<b id="omVoteRate">0%</b></div>\n          <div class="owner-conversion">Vote to share<b id="omShareRate">0%</b></div>\n          <div class="owner-conversion">Visit to save<b id="omSaveRate">0%</b></div>\n          <div class="owner-conversion">Sponsor open to inquiry<b id="omSponsorRate">0%</b></div>\n        </div>\n        <div class="owner-daily">\n          <div class="field-label"><span>Recent activity</span><span class="optional" id="omSince"></span></div>\n          <div id="omDaily"></div>\n        </div>\n        <div class="modal-actions"><button class="btn" id="refreshOwnerMetrics">REFRESH</button><button class="btn" id="clearOwnerMetricsKey">CLEAR ACCESS KEY</button></div>\n      </div>\n    </div>\n  </div>\n\n'''
+              if marker not in text:
+                  raise RuntimeError('Modal insertion marker not found')
+              text = text.replace(marker, modal + marker, 1)
               changed = True
 
-          old = 'if(error){console.error(error);toast("Inquiry could not be sent");return;}'
-          new = 'if(error){console.error(error);logEvent("sponsor_inquiry_error",{package:packageName});toast("Inquiry could not be sent");return;}'
-          if old in text:
-              text = text.replace(old, new, 1)
+          js_marker = 'function openModal(id){const m=$(id);if(!m)return;m.classList.add("show");m.querySelector("input,button,select,textarea")?.focus();}'
+          if 'const OWNER_METRICS_SESSION_KEY=' not in text:
+              js = '''const OWNER_METRICS_SESSION_KEY="ntb_owner_metrics_key";\nfunction ownerMetricsKey(){return sessionStorage.getItem(OWNER_METRICS_SESSION_KEY)||"";}\nfunction setOwnerStatus(message,type=""){const el=$("ownerMetricsStatus");el.textContent=message;el.className=`owner-status ${type}`.trim();}\nfunction ownerNum(value){return Number(value||0).toLocaleString();}\nfunction renderOwnerMetrics(data){\n  const c=data.counts||{},v=data.conversions||{};\n  $("omVisits").textContent=ownerNum(c.page_views);\n  $("omSessions").textContent=ownerNum(c.unique_sessions);\n  $("omNames").textContent=ownerNum((c.names_generated||0)+(c.lab_generated||0));\n  $("omSaves").textContent=ownerNum(c.names_saved);\n  $("omBallotViews").textContent=ownerNum(c.ballot_views);\n  $("omVotes").textContent=ownerNum(c.ballot_votes);\n  $("omShares").textContent=ownerNum(c.ballot_shares);\n  $("omSponsorInquiries").textContent=ownerNum(c.sponsor_inquiries);\n  $("omVoteRate").textContent=`${Number(v.ballot_view_to_vote_pct||0).toFixed(1)}%`;\n  $("omShareRate").textContent=`${Number(v.vote_to_share_pct||0).toFixed(1)}%`;\n  $("omSaveRate").textContent=`${Number(v.visit_to_save_pct||0).toFixed(1)}%`;\n  $("omSponsorRate").textContent=`${Number(v.sponsor_open_to_inquiry_pct||0).toFixed(1)}%`;\n  $("omSince").textContent=data.since?`Since ${new Date(data.since).toLocaleString()}`:"";\n  const daily=$("omDaily");daily.textContent="";\n  (data.daily||[]).forEach(day=>{\n    const row=document.createElement("div");row.className="owner-day";\n    const date=document.createElement("b");date.textContent=day.date;row.appendChild(date);\n    [["Visits",day.visits],["Names",day.names],["Votes",day.votes],["Shares",day.shares]].forEach(([label,value])=>{const span=document.createElement("span");span.textContent=`${label}: ${value||0}`;row.appendChild(span);});\n    daily.appendChild(row);\n  });\n  $("ownerDashboard").classList.add("show");\n  setOwnerStatus("Owner metrics loaded.","good");\n}\nasync function loadOwnerMetrics(){\n  if(!backendReady()){setOwnerStatus("Live backend is unavailable.","bad");return;}\n  const key=$("ownerMetricsKey").value.trim()||ownerMetricsKey();\n  if(!key){setOwnerStatus("Enter the owner access key.","bad");return;}\n  $("loadOwnerMetrics").disabled=true;$("refreshOwnerMetrics").disabled=true;setOwnerStatus("Loading metrics...");\n  const {data,error}=await ntbRpc("get_owner_metrics",{p_owner_key:key});\n  $("loadOwnerMetrics").disabled=false;$("refreshOwnerMetrics").disabled=false;\n  if(error||!data?.ok){sessionStorage.removeItem(OWNER_METRICS_SESSION_KEY);$("ownerDashboard").classList.remove("show");setOwnerStatus("Access key was not accepted.","bad");return;}\n  sessionStorage.setItem(OWNER_METRICS_SESSION_KEY,key);\n  renderOwnerMetrics(data);\n}\nfunction clearOwnerMetricsAccess(){sessionStorage.removeItem(OWNER_METRICS_SESSION_KEY);$("ownerMetricsKey").value="";$("ownerDashboard").classList.remove("show");setOwnerStatus("Owner access cleared from this browser tab.");}\n'''
+              if js_marker not in text:
+                  raise RuntimeError('JavaScript insertion marker not found')
+              text = text.replace(js_marker, js + js_marker, 1)
+              changed = True
+
+          event_marker = '$("clearBackendConfig").addEventListener("click",clearBackendConfig);'
+          if 'refreshOwnerMetrics").addEventListener' not in text:
+              events = '''$("loadOwnerMetrics").addEventListener("click",loadOwnerMetrics);\n$("refreshOwnerMetrics").addEventListener("click",loadOwnerMetrics);\n$("clearOwnerMetricsKey").addEventListener("click",clearOwnerMetricsAccess);\n$("ownerMetricsKey").addEventListener("keydown",e=>{if(e.key==="Enter")loadOwnerMetrics();});\n$("ownerMetricsBtn").addEventListener("click",()=>{const key=ownerMetricsKey();if(key){$("ownerMetricsKey").value=key;loadOwnerMetrics();}});\n'''
+              if event_marker not in text:
+                  raise RuntimeError('Event insertion marker not found')
+              text = text.replace(event_marker, event_marker + '\n' + events, 1)
+              changed = True
+
+          if 'V13 share-ready one-page build' in text:
+              text = text.replace('V13 share-ready one-page build','V14 owner-metrics one-page build',1)
               changed = True
 
           if changed:
               path.write_text(text, encoding='utf-8')
-              print('Sponsor funnel instrumentation applied.')
+              print('V14 owner metrics panel applied.')
           else:
-              print('Sponsor funnel instrumentation already present.')
+              print('V14 owner metrics already present.')
 
       - name: Validate browser JavaScript
         run: |
@@ -67,14 +86,14 @@ jobs:
               raise SystemExit('Inline script not found')
           js = m.group(1)
           Path('/tmp/ntb.js').write_text(js, encoding='utf-8')
-          required = ['sponsor_opened','sponsor_form_started','sponsor_package_interest','sponsor_inquiry_error','sponsor_inquiry']
-          missing = [x for x in required if x not in js]
+          required = ['get_owner_metrics','OWNER_METRICS_SESSION_KEY','loadOwnerMetrics','ownerMetricsModal']
+          missing = [x for x in required if x not in text]
           if missing:
-              raise SystemExit(f'Missing sponsor events: {missing}')
+              raise SystemExit(f'Missing owner metrics pieces: {missing}')
           PY
           node --check /tmp/ntb.js
 
-      - name: Commit sponsor funnel tracking
+      - name: Commit V14 owner metrics
         run: |
           if git diff --quiet -- index.html; then
             echo "No change needed."
@@ -83,5 +102,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Track sponsor conversion funnel"
+          git commit -m "Add secure owner metrics panel"
           git push
