@@ -1,0 +1,12 @@
+{
+  "name": "name-the-baby",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@vercel/og": "1.0.2",
+    "react": "^19.0.0"
+  }
+}
