@@ -244,6 +244,10 @@
     .brand-lockup small{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:900;margin-top:4px}
     .ballot-code{display:inline-flex;align-items:center;gap:6px;margin-top:9px;padding:6px 9px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:.7rem;font-weight:900;color:#665b70}
     .vote-note{margin-top:8px;font-size:.72rem;color:var(--muted);line-height:1.4}
+    .live-sync{display:none;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding:9px 11px;border:1px solid #d8ebe7;background:#f5fbfa;border-radius:12px;font-size:.72rem;color:#55706c}
+    .live-sync.show{display:flex}
+    .live-sync button{border:1px solid #cfe3df;background:#fff;border-radius:999px;padding:6px 9px;font-size:.67rem;font-weight:900;color:#426d68;cursor:pointer}
+    .live-sync button:disabled{opacity:.55;cursor:default}
     .result-row{display:grid;grid-template-columns:minmax(74px,1fr) minmax(110px,2.7fr) auto;gap:9px;align-items:center;padding:7px 0}
     .result-row.leader .result-row-name:after{content:"Leading";margin-left:6px;font-size:.58rem;letter-spacing:.04em;text-transform:uppercase;color:#5d726e;background:#e9f7f4;border:1px solid #cfe7e2;padding:3px 5px;border-radius:999px;vertical-align:middle}
     .result-row-name{font-weight:900;overflow:hidden;text-overflow:ellipsis}
@@ -309,6 +313,7 @@
       <div class="ballot-stats" id="ballotStats"></div>
       <div class="live-total" id="ballotTotal"></div>
       <div class="vote-note" id="voteNote"></div>
+      <div class="live-sync" id="liveSync"><span id="liveSyncText">Live results update automatically.</span><button id="refreshBallotBtn" type="button">REFRESH</button></div>
       <div class="ballot-after" id="ballotAfter">
         <strong id="ballotVoteResult"></strong>
         <div id="ballotVoteCopy" class="sub"></div>
@@ -609,7 +614,7 @@
     </section>
 
     <footer>
-      V11.2 public-launch one-page build with 1,500 name records, live family voting, sponsor intake, monetization-ready placements, and privacy-light analytics. Popularity badges use the U.S. Social Security Administration’s exact 2025 Top 10 where available and its official 2020–2025 Top 200 recent-period rankings for broader popularity context. Name meanings, language roots, cultural notes, and generated-name constructions should receive final editorial and linguistic review before public launch.
+      V12 launch-and-growth one-page build with 1,500 name records, live family voting, sponsor intake, monetization-ready placements, and privacy-light analytics. Popularity badges use the U.S. Social Security Administration’s exact 2025 Top 10 where available and its official 2020–2025 Top 200 recent-period rankings for broader popularity context. Name meanings, language roots, cultural notes, and generated-name constructions should receive final editorial and linguistic review before public launch.
       <div class="footer-links">
         <button data-modal="aboutModal">About</button>
         <button data-modal="privacyModal">Privacy</button>
@@ -1527,7 +1532,15 @@ function decodeBallot(str){
   try{str=str.replace(/-/g,"+").replace(/_/g,"/").replace(/\s/g,"");while(str.length%4)str+="=";const bin=atob(str);const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes));}catch(e){return null;}
 }
 function ballotBaseUrl(){
-  return `${location.origin}${location.pathname}${location.search||""}`;
+  const u=new URL(location.href);
+  u.hash="";u.searchParams.delete("poll");
+  const qs=u.searchParams.toString();
+  return `${u.origin}${u.pathname}${qs?`?${qs}`:""}`;
+}
+function liveBallotUrl(code){
+  const u=new URL(ballotBaseUrl());
+  u.searchParams.set("poll",code);
+  return u.toString();
 }
 function isPublicShareHost(){
   const h=(location.hostname||"").toLowerCase();
@@ -1562,7 +1575,7 @@ async function getShareUrl(){
   }
   if(initBackend()){
     const code=await ensureLivePoll();
-    if(code)return `${ballotBaseUrl()}#poll=${encodeURIComponent(code)}`;
+    if(code)return liveBallotUrl(code);
   }
   return buildDemoBallotUrl();
 }
@@ -1586,7 +1599,7 @@ async function nativeShareBallot(){
   const who=data.family?`${data.family} need your help`:"We need your help";const text=`${who} choosing a baby name. Vote for your favorite on Name the Baby.`;
   try{if(navigator.share)await navigator.share({title:"Help Us Name the Baby",text,url});else{await navigator.clipboard.writeText(`${text}\n${url}`);toast("Ballot link copied");}}catch(e){}
 }
-let activeBallot=null,activeBallotVote="";
+let activeBallot=null,activeBallotVote="",ballotSyncTimer=null;
 function esc(s){return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function localBallotVotes(){
   try{return JSON.parse(localStorage.getItem("ntb11_ballot_votes")||"{}");}catch(e){return {};}
@@ -1617,9 +1630,48 @@ function renderBallot(data,{live=false,afterVote=false}={}){
     $("ballotVoteCopy").textContent="This browser already voted on this ballot. Tap another name if you want to change your vote.";
   }
   $("voteNote").textContent=live&&hasPrior?"Your browser has already voted. You may change that one vote.":"";
+  $("liveSync").classList.toggle("show",live&&hasPrior);
+  setBallotDocumentContext(data);
   renderBallotStats(live&&(afterVote||hasPrior));
+  if(live&&hasPrior)startBallotSync();
   setTimeout(()=>$("ballotPanel").scrollIntoView({behavior:"smooth",block:"start"}),100);
   return true;
+}
+const DEFAULT_PAGE_TITLE="Name the Baby";
+const DEFAULT_PAGE_DESCRIPTION="Name the Baby is a one-page baby name finder and creation lab with smart recommendations, live family voting, custom names, saved favorites, and Name Battle.";
+function setBallotDocumentContext(data){
+  const label=(data?.label||"").trim(),family=(data?.family||"").trim();
+  document.title=label?`Vote on ${label} | Name the Baby`:"Baby Name Vote | Name the Baby";
+  const desc=family?`${family} want your help choosing a baby name. Cast your vote on Name the Baby.`:"Cast your vote on a shared baby-name shortlist.";
+  const meta=document.querySelector('meta[name="description"]');if(meta)meta.content=desc;
+  const ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=document.title;
+  const ogDesc=document.querySelector('meta[property="og:description"]');if(ogDesc)ogDesc.content=desc;
+}
+function resetDocumentContext(){
+  document.title=DEFAULT_PAGE_TITLE;
+  const meta=document.querySelector('meta[name="description"]');if(meta)meta.content=DEFAULT_PAGE_DESCRIPTION;
+  const ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=DEFAULT_PAGE_TITLE;
+  const ogDesc=document.querySelector('meta[property="og:description"]');if(ogDesc)ogDesc.content="One tiny human. One very big decision. Explore 1,500+ names, create new ones, shortlist favorites, and share a family ballot.";
+}
+function stopBallotSync(){if(ballotSyncTimer){clearInterval(ballotSyncTimer);ballotSyncTimer=null;}}
+async function refreshLiveBallot({quiet=false}={}){
+  if(!activeBallot?.live||!activeBallot.code)return false;
+  const btn=$("refreshBallotBtn");if(btn)btn.disabled=true;
+  const {data,error}=await ntbRpc("get_name_poll",{p_code:activeBallot.code});
+  if(btn)btn.disabled=false;
+  if(error||!data){if(!quiet)toast("Live results could not refresh");return false;}
+  activeBallot={...data,live:true,options:data.options||[]};
+  renderBallotStats(true);
+  $("liveSync").classList.add("show");
+  $("liveSyncText").textContent=`Live results updated ${new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"})}.`;
+  if(!quiet)toast("Live results refreshed");
+  return true;
+}
+function startBallotSync(){
+  stopBallotSync();
+  if(!activeBallot?.live)return;
+  $("liveSync").classList.add("show");
+  ballotSyncTimer=setInterval(()=>{if(!document.hidden)refreshLiveBallot({quiet:true});},20000);
 }
 function renderBallotStats(show=false){
   const box=$("ballotStats"),totalEl=$("ballotTotal");
@@ -1642,10 +1694,15 @@ async function loadLivePoll(code){
   logEvent("ballot_view",{option_count:(data.options||[]).length,code_present:true});
   return renderBallot(data,{live:true,afterVote:false});
 }
-async function loadBallotFromHash(){
+async function loadBallotFromLocation(){
+  const queryCode=new URL(location.href).searchParams.get("poll");
+  if(queryCode&&await loadLivePoll(queryCode.trim()))return true;
   if(location.hash.startsWith("#poll=")){
     const code=decodeURIComponent(location.hash.slice(6)).trim();
-    if(code&&await loadLivePoll(code))return true;
+    if(code&&await loadLivePoll(code)){
+      history.replaceState(null,"",liveBallotUrl(code));
+      return true;
+    }
   }
   if(!location.hash.startsWith("#vote="))return false;
   const data=decodeBallot(location.hash.slice(6));if(!data||!Array.isArray(data.names))return false;
@@ -1663,6 +1720,8 @@ async function castBallotVote(name){
     rememberBallotVote(activeBallot.code,name);
     activeBallot={...data,live:true,options:data.options||[]};
     renderBallotStats(true);
+    $("liveSync").classList.add("show");startBallotSync();
+    $("liveSyncText").textContent="Live results update automatically every 20 seconds.";
     $("voteNote").textContent="Vote recorded. Tap another name if you want to change your one vote.";
     logEvent(prior&&prior!==name?"ballot_vote_changed":"ballot_vote",{option_count:(data.options||[]).length,total_votes:Number(data.total_votes||0)});
   }
@@ -1672,10 +1731,10 @@ async function castBallotVote(name){
   $("ballotAfter").classList.add("show");
 }
 async function shareBallotVote(){
-  if(!activeBallotVote||!activeBallot)return;const family=activeBallot.family?` for ${activeBallot.family}`:"";const text=`My vote${family}: ${activeBallotVote}.`;const url=location.href;
-  try{if(navigator.share)await navigator.share({title:"My Name the Baby vote",text,url});else{await navigator.clipboard.writeText(`${text}\n${url}`);toast("Your vote was copied");}}catch(e){}
+  if(!activeBallotVote||!activeBallot)return;const family=activeBallot.family?` for ${activeBallot.family}`:"";const text=`I voted ${activeBallotVote}${family}. Cast your vote on Name the Baby.`;const url=activeBallot.live?liveBallotUrl(activeBallot.code):location.href;
+  try{if(navigator.share)await navigator.share({title:"Help Us Name the Baby",text,url});else{await navigator.clipboard.writeText(`${text}\n${url}`);toast("Vote and ballot link copied");}logEvent("ballot_shared",{live:Boolean(activeBallot.live)});}catch(e){}
 }
-function startOwnSession(){history.replaceState(null,"",ballotBaseUrl());$("ballotPanel").classList.remove("show");$("generator").scrollIntoView({behavior:"smooth",block:"start"});}
+function startOwnSession(){stopBallotSync();history.replaceState(null,"",ballotBaseUrl());$("ballotPanel").classList.remove("show");resetDocumentContext();$("generator").scrollIntoView({behavior:"smooth",block:"start"});}
 
 function resetSurprise(){
   state.gender="any";state.style="any";
@@ -1765,10 +1824,14 @@ $("labResultList").addEventListener("click",e=>{
 renderRootPreview();
 
 renderShortlist();renderLearning();
-window.addEventListener("hashchange",()=>loadBallotFromHash());
+$("refreshBallotBtn").addEventListener("click",()=>refreshLiveBallot());
+window.addEventListener("hashchange",()=>loadBallotFromLocation());
+window.addEventListener("popstate",()=>loadBallotFromLocation());
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&activeBallot?.live&&activeBallotVote)refreshLiveBallot({quiet:true});});
 renderBackendStatus();
-logEvent("page_view",{mode:location.hash.startsWith("#poll=")?"poll":location.hash.startsWith("#vote=")?"demo_poll":"main"});
-loadBallotFromHash();
+const startupPoll=new URL(location.href).searchParams.get("poll")||location.hash.startsWith("#poll=");
+logEvent("page_view",{mode:startupPoll?"poll":location.hash.startsWith("#vote=")?"demo_poll":"main"});
+loadBallotFromLocation();
 </script>
 </body>
 </html>
