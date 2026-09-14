@@ -1,4 +1,4 @@
-name: V15 growth analytics
+name: V16 retention and re-engagement
 
 on:
   push:
@@ -11,14 +11,14 @@ permissions:
   contents: write
 
 jobs:
-  growth_analytics:
+  retention:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Apply V15 patch
-        run: python .github/scripts/v15_patch.py
+      - name: Apply V16 retention patch
+        run: python .github/scripts/v16_patch.py
 
       - name: Validate browser JavaScript
         run: |
@@ -29,11 +29,16 @@ jobs:
           m = re.search(r'<script>(.*)</script>', text, re.S)
           if not m:
               raise SystemExit('Inline script not found')
-          Path('/tmp/ntb.js').write_text(m.group(1), encoding='utf-8')
+          js = m.group(1)
+          required = ['initReturnExperience','return_visit','resume_shortlist','recent_name_revisited','omReturningVisitors']
+          missing = [x for x in required if x not in text]
+          if missing:
+              raise SystemExit(f'Missing V16 pieces: {missing}')
+          Path('/tmp/ntb.js').write_text(js, encoding='utf-8')
           PY
           node --check /tmp/ntb.js
 
-      - name: Commit V15 growth analytics
+      - name: Commit V16 retention experience
         run: |
           if git diff --quiet -- index.html; then
             echo "No change needed."
@@ -42,5 +47,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Add growth-loop attribution analytics"
+          git commit -m "Add retention and re-engagement experience"
           git push
