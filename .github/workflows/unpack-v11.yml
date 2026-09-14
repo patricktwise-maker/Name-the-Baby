@@ -1,4 +1,4 @@
-name: V14 secure owner metrics
+name: V15 growth analytics
 
 on:
   push:
@@ -11,13 +11,13 @@ permissions:
   contents: write
 
 jobs:
-  owner_metrics:
+  growth_analytics:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Add secure owner metrics panel
+      - name: Add share attribution and growth funnel
         shell: python
         run: |
           from pathlib import Path
@@ -26,54 +26,191 @@ jobs:
           text = path.read_text(encoding='utf-8')
           changed = False
 
-          if '.owner-metrics-grid{' not in text:
-              marker = '    @media(max-width:820px){.workspace{grid-template-columns:1fr}.result-card{position:relative;top:auto}.sponsor-panel{grid-template-columns:1fr}.sponsor-badge{justify-self:stretch;width:100%}}\n'
-              css = '''    .owner-key-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:14px}\n    .owner-key-row .btn{white-space:nowrap}\n    .owner-status{margin-top:10px;font-size:.78rem;color:var(--muted);min-height:20px}\n    .owner-status.good{color:#426d68;font-weight:850}\n    .owner-status.bad{color:#9a4f5f;font-weight:850}\n    .owner-dashboard{display:none;margin-top:16px}\n    .owner-dashboard.show{display:block}\n    .owner-metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}\n    .owner-metric{border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px}\n    .owner-metric span{display:block;color:var(--muted);font-size:.66rem;font-weight:850;text-transform:uppercase;letter-spacing:.05em}\n    .owner-metric strong{display:block;font-size:1.45rem;margin-top:4px;letter-spacing:-.04em}\n    .owner-conversions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}\n    .owner-conversion{border-radius:13px;padding:10px 11px;background:#f5fbfa;border:1px solid #d8ebe7;font-size:.76rem;color:#55706c}\n    .owner-conversion b{display:block;color:#426d68;font-size:1rem;margin-top:3px}\n    .owner-daily{margin-top:13px;border-top:1px solid var(--line);padding-top:11px}\n    .owner-day{display:grid;grid-template-columns:90px repeat(4,1fr);gap:6px;align-items:center;padding:5px 0;font-size:.7rem;color:var(--muted)}\n    .owner-day b{color:var(--ink)}\n    @media(max-width:700px){.owner-metrics-grid{grid-template-columns:repeat(2,1fr)}.owner-conversions{grid-template-columns:1fr}.owner-key-row{grid-template-columns:1fr}.owner-day{grid-template-columns:78px repeat(2,1fr)}.owner-day span:nth-child(4),.owner-day span:nth-child(5){display:none}}\n'''
+          # Attribution helpers. Random IDs are non-personal and exist only to connect a share event to a landing visit.
+          marker = '''function liveBallotUrl(code){
+  const u=new URL(ballotBaseUrl());
+  u.searchParams.set("poll",code);
+  return u.toString();
+}'''
+          if 'function attributedShareUrl(' not in text:
+              insert = marker + '''
+function makeShareId(){
+  try{return crypto.randomUUID().replace(/-/g,"").slice(0,16);}catch(e){return `${Date.now().toString(36)}${Math.random().toString(36).slice(2,8)}`;}
+}
+function attributedShareUrl(rawUrl,source,shareId=makeShareId()){
+  const u=new URL(rawUrl,PUBLIC_SITE_ORIGIN);
+  u.searchParams.set("src",source);
+  u.searchParams.set("sid",shareId);
+  return {url:u.toString(),shareId};
+}
+function landingAttribution(){
+  const u=new URL(location.href);
+  const source=(u.searchParams.get("src")||"").slice(0,32);
+  const shareId=(u.searchParams.get("sid")||"").replace(/[^a-zA-Z0-9_-]/g,"").slice(0,40);
+  return {source,share_id:shareId};
+}'''
               if marker not in text:
-                  raise RuntimeError('CSS insertion marker not found')
-              text = text.replace(marker, css + marker, 1)
+                  raise RuntimeError('liveBallotUrl marker not found')
+              text = text.replace(marker, insert, 1)
               changed = True
 
-          footer_marker = '        <button data-modal="launchModal">Launch Status</button>\n'
-          if 'id="ownerMetricsBtn"' not in text:
-              if footer_marker not in text:
-                  raise RuntimeError('Footer insertion marker not found')
-              text = text.replace(footer_marker, '        <button data-modal="ownerMetricsModal" id="ownerMetricsBtn">Owner Metrics</button>\n' + footer_marker, 1)
+          # A normal name share now contains a branded referral URL and is measurable.
+          old = '''async function share(){
+  if(!state.current)return;
+  const sur=$("surname").value.trim();
+  const text=`What do you think of ${state.current.name}${sur?" "+sur:""}? I found it on Name the Baby.`;
+  try{
+    if(navigator.share){await navigator.share({title:"Name the Baby",text});}
+    else{await navigator.clipboard.writeText(text);toast("Name copied to clipboard");}
+  }catch(e){}
+}'''
+          new = '''async function share(){
+  if(!state.current)return;
+  const sur=$("surname").value.trim();
+  const copy=`What do you think of ${state.current.name}${sur?" "+sur:""}? I found it on Name the Baby.`;
+  const shared=attributedShareUrl(`${PUBLIC_SITE_ORIGIN}/`,"name_share");
+  try{
+    if(navigator.share)await navigator.share({title:"Name the Baby",text:copy,url:shared.url});
+    else{await navigator.clipboard.writeText(`${copy}\n${shared.url}`);toast("Name and link copied");}
+    logEvent("name_shared",{source:"name_share",share_id:shared.shareId});
+  }catch(e){}
+}'''
+          if old in text:
+              text = text.replace(old, new, 1)
               changed = True
 
-          if 'id="ownerMetricsModal"' not in text:
-              marker = '  <div class="toast" id="toast"></div>\n'
-              modal = '''  <div class="modal-backdrop" id="ownerMetricsModal" role="dialog" aria-modal="true" aria-labelledby="ownerMetricsTitle">\n    <div class="modal">\n      <button class="close" data-close aria-label="Close">×</button>\n      <h2 id="ownerMetricsTitle">Owner Metrics</h2>\n      <div class="sub">Private post-launch product metrics. The access key stays in this browser tab only and is never stored in the page source.</div>\n      <div class="owner-key-row">\n        <input id="ownerMetricsKey" type="password" autocomplete="new-password" placeholder="Owner access key" aria-label="Owner access key">\n        <button class="btn keep" id="loadOwnerMetrics">LOAD METRICS</button>\n      </div>\n      <div class="owner-status" id="ownerMetricsStatus">Enter the owner key to load post-launch metrics.</div>\n      <div class="owner-dashboard" id="ownerDashboard">\n        <div class="owner-metrics-grid">\n          <div class="owner-metric"><span>Visits</span><strong id="omVisits">0</strong></div>\n          <div class="owner-metric"><span>Unique sessions</span><strong id="omSessions">0</strong></div>\n          <div class="owner-metric"><span>Names generated</span><strong id="omNames">0</strong></div>\n          <div class="owner-metric"><span>Names saved</span><strong id="omSaves">0</strong></div>\n          <div class="owner-metric"><span>Ballot opens</span><strong id="omBallotViews">0</strong></div>\n          <div class="owner-metric"><span>Votes</span><strong id="omVotes">0</strong></div>\n          <div class="owner-metric"><span>Shares</span><strong id="omShares">0</strong></div>\n          <div class="owner-metric"><span>Sponsor inquiries</span><strong id="omSponsorInquiries">0</strong></div>\n        </div>\n        <div class="owner-conversions">\n          <div class="owner-conversion">Ballot open to vote<b id="omVoteRate">0%</b></div>\n          <div class="owner-conversion">Vote to share<b id="omShareRate">0%</b></div>\n          <div class="owner-conversion">Visit to save<b id="omSaveRate">0%</b></div>\n          <div class="owner-conversion">Sponsor open to inquiry<b id="omSponsorRate">0%</b></div>\n        </div>\n        <div class="owner-daily">\n          <div class="field-label"><span>Recent activity</span><span class="optional" id="omSince"></span></div>\n          <div id="omDaily"></div>\n        </div>\n        <div class="modal-actions"><button class="btn" id="refreshOwnerMetrics">REFRESH</button><button class="btn" id="clearOwnerMetricsKey">CLEAR ACCESS KEY</button></div>\n      </div>\n    </div>\n  </div>\n\n'''
+          # Ballot-copy share attribution.
+          old = '''async function copyBallotLink(){
+  const url=await getShareUrl();if(!url){toast("Save at least two names first");return;}
+  try{await navigator.clipboard.writeText(url);toast(initBackend()?"Live ballot link copied":"Demo ballot link copied");}catch(e){$("shareUrlPreview").textContent=url;$("shareUrlPreview").classList.add("show");toast("Use the link shown below");}
+}'''
+          new = '''async function copyBallotLink(){
+  const rawUrl=await getShareUrl();if(!rawUrl){toast("Save at least two names first");return;}
+  const shared=attributedShareUrl(rawUrl,"ballot_share");
+  try{await navigator.clipboard.writeText(shared.url);toast(initBackend()?"Live ballot link copied":"Demo ballot link copied");logEvent("ballot_shared",{live:initBackend(),source:"ballot_share",share_id:shared.shareId});}
+  catch(e){$("shareUrlPreview").textContent=shared.url;$("shareUrlPreview").classList.add("show");toast("Use the link shown below");}
+}'''
+          if old in text:
+              text = text.replace(old, new, 1)
+              changed = True
+
+          # Native ballot share attribution.
+          old = '''async function nativeShareBallot(){
+  const data=currentBallotData(),url=await getShareUrl();if(!url){toast("Save at least two names first");return;}
+  const who=data.family?`${data.family} need your help`:"We need your help";const text=`${who} choosing a baby name. Vote for your favorite on Name the Baby.`;
+  try{if(navigator.share)await navigator.share({title:"Help Us Name the Baby",text,url});else{await navigator.clipboard.writeText(`${text}\n${url}`);toast("Ballot link copied");}}catch(e){}
+}'''
+          new = '''async function nativeShareBallot(){
+  const data=currentBallotData(),rawUrl=await getShareUrl();if(!rawUrl){toast("Save at least two names first");return;}
+  const shared=attributedShareUrl(rawUrl,"ballot_share");
+  const who=data.family?`${data.family} need your help`:"We need your help";const copy=`${who} choosing a baby name. Vote for your favorite on Name the Baby.`;
+  try{if(navigator.share)await navigator.share({title:"Help Us Name the Baby",text:copy,url:shared.url});else{await navigator.clipboard.writeText(`${copy}\n${shared.url}`);toast("Ballot link copied");}logEvent("ballot_shared",{live:initBackend(),source:"ballot_share",share_id:shared.shareId});}catch(e){}
+}'''
+          if old in text:
+              text = text.replace(old, new, 1)
+              changed = True
+
+          # Sharing after a vote gets a distinct source label.
+          old = '''async function shareBallotVote(){
+  if(!activeBallotVote||!activeBallot)return;const family=activeBallot.family?` for ${activeBallot.family}`:"";const text=`I voted ${activeBallotVote}${family}. Cast your vote on Name the Baby.`;const url=activeBallot.live?liveBallotUrl(activeBallot.code):location.href;
+  try{if(navigator.share)await navigator.share({title:"Help Us Name the Baby",text,url});else{await navigator.clipboard.writeText(`${text}\n${url}`);toast("Vote and ballot link copied");}logEvent("ballot_shared",{live:Boolean(activeBallot.live)});}catch(e){}
+}'''
+          new = '''async function shareBallotVote(){
+  if(!activeBallotVote||!activeBallot)return;const family=activeBallot.family?` for ${activeBallot.family}`:"";const copy=`I voted ${activeBallotVote}${family}. Cast your vote on Name the Baby.`;const rawUrl=activeBallot.live?liveBallotUrl(activeBallot.code):location.href;const shared=attributedShareUrl(rawUrl,"vote_share");
+  try{if(navigator.share)await navigator.share({title:"Help Us Name the Baby",text:copy,url:shared.url});else{await navigator.clipboard.writeText(`${copy}\n${shared.url}`);toast("Vote and ballot link copied");}logEvent("ballot_shared",{live:Boolean(activeBallot.live),source:"vote_share",share_id:shared.shareId});}catch(e){}
+}'''
+          if old in text:
+              text = text.replace(old, new, 1)
+              changed = True
+
+          # Capture referral context on ballot opens.
+          old = 'logEvent("ballot_view",{option_count:(data.options||[]).length,code_present:true});'
+          new = 'logEvent("ballot_view",{option_count:(data.options||[]).length,code_present:true,...landingAttribution()});'
+          if old in text:
+              text = text.replace(old, new, 1)
+              changed = True
+
+          # Page views now preserve only the source label and random share id, not personal content.
+          old = '''const startupPoll=new URL(location.href).searchParams.get("poll")||location.hash.startsWith("#poll=");
+logEvent("page_view",{mode:startupPoll?"poll":location.hash.startsWith("#vote=")?"demo_poll":"main"});'''
+          new = '''const startupPoll=new URL(location.href).searchParams.get("poll")||location.hash.startsWith("#poll=");
+const landing=landingAttribution();
+logEvent("page_view",{mode:startupPoll?"poll":location.hash.startsWith("#vote=")?"demo_poll":"main",source:landing.source||"direct",share_id:landing.share_id||""});'''
+          if old in text:
+              text = text.replace(old, new, 1)
+              changed = True
+
+          # Add growth-loop cards to the existing owner dashboard.
+          marker = '''          <div class="owner-metric"><span>Sponsor inquiries</span><strong id="omSponsorInquiries">0</strong></div>
+        </div>'''
+          if 'id="omReferredVisits"' not in text:
+              replacement = '''          <div class="owner-metric"><span>Sponsor inquiries</span><strong id="omSponsorInquiries">0</strong></div>
+          <div class="owner-metric"><span>Referred visits</span><strong id="omReferredVisits">0</strong></div>
+          <div class="owner-metric"><span>Tracked shares</span><strong id="omTrackedShares">0</strong></div>
+          <div class="owner-metric"><span>Shares creating visits</span><strong id="omSharesWithVisit">0</strong></div>
+          <div class="owner-metric"><span>Ballots created</span><strong id="omBallotsCreated">0</strong></div>
+        </div>'''
               if marker not in text:
-                  raise RuntimeError('Modal insertion marker not found')
-              text = text.replace(marker, modal + marker, 1)
+                  raise RuntimeError('Owner metric card marker not found')
+              text = text.replace(marker, replacement, 1)
               changed = True
 
-          js_marker = 'function openModal(id){const m=$(id);if(!m)return;m.classList.add("show");m.querySelector("input,button,select,textarea")?.focus();}'
-          if 'const OWNER_METRICS_SESSION_KEY=' not in text:
-              js = '''const OWNER_METRICS_SESSION_KEY="ntb_owner_metrics_key";\nfunction ownerMetricsKey(){return sessionStorage.getItem(OWNER_METRICS_SESSION_KEY)||"";}\nfunction setOwnerStatus(message,type=""){const el=$("ownerMetricsStatus");el.textContent=message;el.className=`owner-status ${type}`.trim();}\nfunction ownerNum(value){return Number(value||0).toLocaleString();}\nfunction renderOwnerMetrics(data){\n  const c=data.counts||{},v=data.conversions||{};\n  $("omVisits").textContent=ownerNum(c.page_views);\n  $("omSessions").textContent=ownerNum(c.unique_sessions);\n  $("omNames").textContent=ownerNum((c.names_generated||0)+(c.lab_generated||0));\n  $("omSaves").textContent=ownerNum(c.names_saved);\n  $("omBallotViews").textContent=ownerNum(c.ballot_views);\n  $("omVotes").textContent=ownerNum(c.ballot_votes);\n  $("omShares").textContent=ownerNum(c.ballot_shares);\n  $("omSponsorInquiries").textContent=ownerNum(c.sponsor_inquiries);\n  $("omVoteRate").textContent=`${Number(v.ballot_view_to_vote_pct||0).toFixed(1)}%`;\n  $("omShareRate").textContent=`${Number(v.vote_to_share_pct||0).toFixed(1)}%`;\n  $("omSaveRate").textContent=`${Number(v.visit_to_save_pct||0).toFixed(1)}%`;\n  $("omSponsorRate").textContent=`${Number(v.sponsor_open_to_inquiry_pct||0).toFixed(1)}%`;\n  $("omSince").textContent=data.since?`Since ${new Date(data.since).toLocaleString()}`:"";\n  const daily=$("omDaily");daily.textContent="";\n  (data.daily||[]).forEach(day=>{\n    const row=document.createElement("div");row.className="owner-day";\n    const date=document.createElement("b");date.textContent=day.date;row.appendChild(date);\n    [["Visits",day.visits],["Names",day.names],["Votes",day.votes],["Shares",day.shares]].forEach(([label,value])=>{const span=document.createElement("span");span.textContent=`${label}: ${value||0}`;row.appendChild(span);});\n    daily.appendChild(row);\n  });\n  $("ownerDashboard").classList.add("show");\n  setOwnerStatus("Owner metrics loaded.","good");\n}\nasync function loadOwnerMetrics(){\n  if(!backendReady()){setOwnerStatus("Live backend is unavailable.","bad");return;}\n  const key=$("ownerMetricsKey").value.trim()||ownerMetricsKey();\n  if(!key){setOwnerStatus("Enter the owner access key.","bad");return;}\n  $("loadOwnerMetrics").disabled=true;$("refreshOwnerMetrics").disabled=true;setOwnerStatus("Loading metrics...");\n  const {data,error}=await ntbRpc("get_owner_metrics",{p_owner_key:key});\n  $("loadOwnerMetrics").disabled=false;$("refreshOwnerMetrics").disabled=false;\n  if(error||!data?.ok){sessionStorage.removeItem(OWNER_METRICS_SESSION_KEY);$("ownerDashboard").classList.remove("show");setOwnerStatus("Access key was not accepted.","bad");return;}\n  sessionStorage.setItem(OWNER_METRICS_SESSION_KEY,key);\n  renderOwnerMetrics(data);\n}\nfunction clearOwnerMetricsAccess(){sessionStorage.removeItem(OWNER_METRICS_SESSION_KEY);$("ownerMetricsKey").value="";$("ownerDashboard").classList.remove("show");setOwnerStatus("Owner access cleared from this browser tab.");}\n'''
-              if js_marker not in text:
-                  raise RuntimeError('JavaScript insertion marker not found')
-              text = text.replace(js_marker, js + js_marker, 1)
+          marker = '''          <div class="owner-conversion">Sponsor open to inquiry<b id="omSponsorRate">0%</b></div>
+        </div>'''
+          if 'id="omReferralRate"' not in text:
+              replacement = '''          <div class="owner-conversion">Sponsor open to inquiry<b id="omSponsorRate">0%</b></div>
+          <div class="owner-conversion">Visit to generate<b id="omGenerateRate">0%</b></div>
+          <div class="owner-conversion">Generate to save<b id="omGenerateSaveRate">0%</b></div>
+          <div class="owner-conversion">Save to ballot<b id="omSaveBallotRate">0%</b></div>
+          <div class="owner-conversion">Share to referred visit<b id="omReferralRate">0%</b></div>
+        </div>'''
+              if marker not in text:
+                  raise RuntimeError('Owner conversion marker not found')
+              text = text.replace(marker, replacement, 1)
               changed = True
 
-          event_marker = '$("clearBackendConfig").addEventListener("click",clearBackendConfig);'
-          if 'refreshOwnerMetrics").addEventListener' not in text:
-              events = '''$("loadOwnerMetrics").addEventListener("click",loadOwnerMetrics);\n$("refreshOwnerMetrics").addEventListener("click",loadOwnerMetrics);\n$("clearOwnerMetricsKey").addEventListener("click",clearOwnerMetricsAccess);\n$("ownerMetricsKey").addEventListener("keydown",e=>{if(e.key==="Enter")loadOwnerMetrics();});\n$("ownerMetricsBtn").addEventListener("click",()=>{const key=ownerMetricsKey();if(key){$("ownerMetricsKey").value=key;loadOwnerMetrics();}});\n'''
-              if event_marker not in text:
-                  raise RuntimeError('Event insertion marker not found')
-              text = text.replace(event_marker, event_marker + '\n' + events, 1)
+          # Populate new dashboard fields.
+          old = '''  $("omSponsorInquiries").textContent=ownerNum(c.sponsor_inquiries);
+  $("omVoteRate").textContent=`${Number(v.ballot_view_to_vote_pct||0).toFixed(1)}%`;'''
+          new = '''  $("omSponsorInquiries").textContent=ownerNum(c.sponsor_inquiries);
+  const g=data.growth||{};
+  $("omReferredVisits").textContent=ownerNum(g.referred_visits);
+  $("omTrackedShares").textContent=ownerNum(g.tracked_shares);
+  $("omSharesWithVisit").textContent=ownerNum(g.shares_with_visit);
+  $("omBallotsCreated").textContent=ownerNum(c.ballots_created);
+  $("omVoteRate").textContent=`${Number(v.ballot_view_to_vote_pct||0).toFixed(1)}%`;'''
+          if old in text:
+              text = text.replace(old, new, 1)
               changed = True
 
-          if 'V13 share-ready one-page build' in text:
-              text = text.replace('V13 share-ready one-page build','V14 owner-metrics one-page build',1)
+          old = '''  $("omSponsorRate").textContent=`${Number(v.sponsor_open_to_inquiry_pct||0).toFixed(1)}%`;
+  $("omSince").textContent=data.since?`Since ${new Date(data.since).toLocaleString()}`:"";'''
+          new = '''  $("omSponsorRate").textContent=`${Number(v.sponsor_open_to_inquiry_pct||0).toFixed(1)}%`;
+  $("omGenerateRate").textContent=`${Number(v.visit_to_generate_pct||0).toFixed(1)}%`;
+  $("omGenerateSaveRate").textContent=`${Number(v.generate_to_save_pct||0).toFixed(1)}%`;
+  $("omSaveBallotRate").textContent=`${Number(v.save_to_ballot_pct||0).toFixed(1)}%`;
+  $("omReferralRate").textContent=`${Number(v.share_to_visit_pct||0).toFixed(1)}%`;
+  $("omSince").textContent=data.since?`Since ${new Date(data.since).toLocaleString()}`:"";'''
+          if old in text:
+              text = text.replace(old, new, 1)
+              changed = True
+
+          # Show referrals in daily activity.
+          old = '''    [["Visits",day.visits],["Names",day.names],["Votes",day.votes],["Shares",day.shares]].forEach(([label,value])=>{const span=document.createElement("span");span.textContent=`${label}: ${value||0}`;row.appendChild(span);});'''
+          new = '''    [["Visits",day.visits],["Names",day.names],["Votes",day.votes],["Shares",day.shares],["Referrals",day.referrals]].forEach(([label,value])=>{const span=document.createElement("span");span.textContent=`${label}: ${value||0}`;row.appendChild(span);});'''
+          if old in text:
+              text = text.replace(old, new, 1)
+              changed = True
+
+          if 'V14 owner-metrics one-page build' in text:
+              text = text.replace('V14 owner-metrics one-page build','V15 growth-analytics one-page build',1)
               changed = True
 
           if changed:
               path.write_text(text, encoding='utf-8')
-              print('V14 owner metrics panel applied.')
+              print('V15 growth analytics applied.')
           else:
-              print('V14 owner metrics already present.')
+              print('V15 growth analytics already present.')
 
       - name: Validate browser JavaScript
         run: |
@@ -83,17 +220,17 @@ jobs:
           text = Path('index.html').read_text(encoding='utf-8')
           m = re.search(r'<script>(.*)</script>', text, re.S)
           if not m:
-              raise SystemExit('Inline script not found')
+            raise SystemExit('Inline script not found')
           js = m.group(1)
           Path('/tmp/ntb.js').write_text(js, encoding='utf-8')
-          required = ['get_owner_metrics','OWNER_METRICS_SESSION_KEY','loadOwnerMetrics','ownerMetricsModal']
+          required = ['attributedShareUrl','landingAttribution','name_shared','share_id','omReferredVisits','omReferralRate']
           missing = [x for x in required if x not in text]
           if missing:
-              raise SystemExit(f'Missing owner metrics pieces: {missing}')
+            raise SystemExit(f'Missing V15 pieces: {missing}')
           PY
           node --check /tmp/ntb.js
 
-      - name: Commit V14 owner metrics
+      - name: Commit V15 growth analytics
         run: |
           if git diff --quiet -- index.html; then
             echo "No change needed."
@@ -102,5 +239,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Add secure owner metrics panel"
+          git commit -m "Add growth-loop attribution analytics"
           git push
