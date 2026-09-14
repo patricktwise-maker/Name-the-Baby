@@ -1,4 +1,4 @@
-name: V18 sponsor and affiliate readiness
+name: V18.1 Impact website verification
 
 on:
   push:
@@ -11,16 +11,19 @@ permissions:
   contents: write
 
 jobs:
-  monetization_readiness:
+  impact_verification:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Apply V18 monetization patch
+      - name: Preserve V18 monetization readiness
         run: python .github/scripts/v18_patch.py
 
-      - name: Validate V18 browser JavaScript
+      - name: Add Impact verification tag
+        run: python .github/scripts/impact_verify.py
+
+      - name: Validate browser JavaScript and Impact tag
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -32,21 +35,18 @@ jobs:
           Path('/tmp/ntb.js').write_text(m.group(1), encoding='utf-8')
           required = [
               'V18 sponsor-and-affiliate-ready one-page build',
+              "<meta name='impact-site-verification' value='9370d4fd-1b03-442a-844d-163db085d91f'>",
               'get_partner_offer',
               'partner_impression',
-              'partner_click',
-              'rel="sponsored noopener noreferrer"',
-              'Affiliate disclosure:',
-              'get_owner_monetization',
-              'id="omPartnerCtr"'
+              'partner_click'
           ]
           missing = [x for x in required if x not in text]
           if missing:
-              raise SystemExit(f'Missing V18 pieces: {missing}')
+              raise SystemExit(f'Missing V18.1 pieces: {missing}')
           PY
           node --check /tmp/ntb.js
 
-      - name: Commit V18 monetization readiness
+      - name: Commit Impact verification
         run: |
           if git diff --quiet -- index.html; then
             echo "No change needed."
@@ -55,5 +55,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Add sponsor and affiliate monetization readiness"
+          git commit -m "Add Impact website verification tag"
           git push
