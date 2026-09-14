@@ -1,4 +1,4 @@
-name: Fix V11 startup JavaScript
+name: Polish V11 live ballot experience
 
 on:
   push:
@@ -11,30 +11,75 @@ permissions:
   contents: write
 
 jobs:
-  patch:
+  polish:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Guard removed sponsor button listener
+      - name: Polish ballot prompt and selected state
         shell: python
         run: |
           from pathlib import Path
 
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
-          old = '$("sponsorBtn").addEventListener("click",()=>{openModal("sponsorModal");logEvent("sponsor_opened",{});});'
-          new = 'if($("sponsorBtn"))$("sponsorBtn").addEventListener("click",()=>{openModal("sponsorModal");logEvent("sponsor_opened",{});});'
+          changed = False
 
-          if old not in text:
-              print('Old sponsor listener not found; patch may already be applied.')
-          else:
-              text = text.replace(old, new, 1)
+          replacements = [
+            (
+              '$("voteNote").textContent=live?(hasPrior?"Your browser has already voted. You may change that one vote.":"Vote to reveal the live results."):"";',
+              '$("voteNote").textContent=live&&hasPrior?"Your browser has already voted. You may change that one vote.":"";'
+            ),
+            (
+              '$("ballotOptions").innerHTML=options.map(o=>`<button class="ballot-name ${activeBallotVote===o.name?"chosen":""}" data-ballotname="${esc(o.name)}">${esc(o.name)}</button>`).join("");',
+              '$("ballotOptions").innerHTML=options.map(o=>`<button class="ballot-name ${activeBallotVote===o.name?"chosen":""}" data-ballotname="${esc(o.name)}" aria-pressed="${activeBallotVote===o.name?"true":"false"}">${esc(o.name)}</button>`).join("");'
+            ),
+            (
+              '$("ballotOptions").querySelectorAll(".ballot-name").forEach(b=>b.classList.toggle("chosen",b.dataset.ballotname===name));',
+              '$("ballotOptions").querySelectorAll(".ballot-name").forEach(b=>{const chosen=b.dataset.ballotname===name;b.classList.toggle("chosen",chosen);b.setAttribute("aria-pressed",chosen?"true":"false");});'
+            ),
+            (
+              '$("voteNote").textContent="Your vote is saved. Tap another name if you want to change it.";',
+              '$("voteNote").textContent="Vote recorded. Tap another name if you want to change your one vote.";'
+            ),
+            (
+              'activeBallot.live?`Your one vote for ${name} is saved and the live totals are updated.`',
+              'activeBallot.live?`Your vote for ${name} is saved. The live totals above are updated.`'
+            ),
+            (
+              'V11 public-launch one-page build',
+              'V11.1 public-launch one-page build'
+            ),
+          ]
+
+          for old, new in replacements:
+              if old in text:
+                  text = text.replace(old, new, 1)
+                  changed = True
+              else:
+                  print('Pattern already changed or not found:', old[:80])
+
+          if changed:
               path.write_text(text, encoding='utf-8')
-              print('Patched startup listener.')
+              print('Ballot polish applied.')
+          else:
+              print('No ballot polish changes needed.')
 
-      - name: Commit startup fix
+      - name: Validate JavaScript
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          text = Path('index.html').read_text(encoding='utf-8')
+          m = re.search(r'<script>(.*)</script>', text, re.S)
+          if not m:
+              raise SystemExit('Inline script not found')
+          Path('/tmp/ntb.js').write_text(m.group(1), encoding='utf-8')
+          PY
+          node --check /tmp/ntb.js
+
+      - name: Commit ballot polish
         run: |
           if git diff --quiet -- index.html; then
             echo "No change needed."
@@ -43,5 +88,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Fix V11 ballot startup"
+          git commit -m "Polish live ballot confirmation"
           git push
