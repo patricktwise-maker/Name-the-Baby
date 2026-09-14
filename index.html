@@ -8,9 +8,9 @@
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <link rel="canonical" href="https://namethebaby.site/" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2718%27 fill=%27%23ff8ea3%27/%3E%3Ctext x=%2732%27 y=%2742%27 text-anchor=%27middle%27 font-size=%2734%27 font-family=%27Arial,sans-serif%27 font-weight=%27900%27 fill=%27%23241f2a%27%3EN%3C/text%3E%3C/svg%3E" />
-  <meta name="description" content="Name the Baby is a one-page baby name finder and creation lab with smart recommendations, live family voting, custom names, saved favorites, and Name Battle." />
-  <meta property="og:title" content="Name the Baby" />
-  <meta property="og:description" content="One tiny human. One very big decision. Explore 1,500+ names, create new ones, shortlist favorites, and share a family ballot." />
+  <meta name="description" content="Find boy, girl and unisex baby names with meanings, popularity filters and surname previews. Create unique names, save favorites and share a family poll." />
+  <meta property="og:title" content="Baby Name Generator, Creator & Family Poll | Name the Baby" />
+  <meta property="og:description" content="Explore 1,500+ baby names, create unique names, preview them with a surname, save favorites, and share a live family baby-name poll." />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Name the Baby" />
   <meta property="og:url" content="https://namethebaby.site/" />
@@ -19,10 +19,20 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Name the Baby — Find it. Build it. Vote on it." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Name the Baby" />
-  <meta name="twitter:description" content="Explore 1,500+ names, create new ones, shortlist favorites, and share a live family ballot." />
+  <meta name="twitter:title" content="Baby Name Generator, Creator & Family Poll | Name the Baby" />
+  <meta name="twitter:description" content="Explore 1,500+ baby names, create unique names, preview them with a surname, save favorites, and share a live family baby-name poll." />
   <meta name="twitter:image" content="https://namethebaby.site/api/og" />
-  <title>Name the Baby</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Name the Baby",
+    "alternateName": ["NameTheBaby", "namethebaby.site"],
+    "url": "https://namethebaby.site/",
+    "description": "A baby name generator, name creator, shortlist, and live family baby-name polling tool."
+  }
+  </script>
+  <title>Baby Name Generator, Creator & Family Poll | Name the Baby</title>
   <style>
     :root{
       --paper:#fff8f2; --paper2:#fffdfb; --ink:#241f2a; --muted:#716978; --line:#eaded7;
@@ -107,6 +117,14 @@
     .fighter:hover{border-color:var(--mint);transform:translateY(-1px)}
     .vs{align-self:center;font-weight:1000;color:var(--muted)}
     .battle-result{min-height:24px;margin-top:11px;font-size:.88rem;font-weight:850}
+    .seo-discovery{margin-top:20px}
+    .seo-discovery>p{max-width:850px}
+    .seo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:16px}
+    .seo-item{border:1px solid var(--line);background:#fff;border-radius:17px;padding:16px}
+    .seo-item h3{font-size:1rem;margin:0;letter-spacing:-.025em}
+    .seo-item p{margin:7px 0 0;color:var(--muted);font-size:.79rem;line-height:1.55}
+    .seo-note{margin:14px 0 0;padding:12px 14px;border:1px solid #d8ebe7;background:#f5fbfa;border-radius:14px;color:#55706c;font-size:.8rem;line-height:1.55}
+    @media(max-width:820px){.seo-grid{grid-template-columns:1fr}}
     .sponsor-panel{margin-top:20px;display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:center;background:linear-gradient(135deg,#29232f,#3a3040);color:#fff;border:0}
     .sponsor-panel .sub{color:#d8cedc}
     .sponsor-badge{justify-self:end;width:min(100%,330px);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:18px;border-radius:18px;text-align:center}
@@ -331,7 +349,7 @@
     <section class="hero">
       <div class="kicker">One page. One very big decision.</div>
       <h1>Name the Baby.</h1>
-      <p>Tell us the vibe, add the family name, and get one thoughtful baby-name suggestion at a time. Save the keepers. Battle the finalists.</p>
+      <p>Use the baby name generator to explore boy, girl, and unisex baby names by style, origin, popularity, first letter, syllables, and surname. Save favorites, create a unique name, compare finalists, and share a family baby-name poll.</p>
       <div class="hero-actions">
         <button class="ghost-link" id="surpriseTop">Surprise me</button>
         <button class="ghost-link" id="jumpLab">Create a unique name</button>
@@ -645,6 +663,27 @@
       </div>
     </section>
 
+    <section class="card seo-discovery" id="babyNameTools">
+      <div class="eyebrow">Baby name tools</div>
+      <h2 style="margin-top:6px">Find, create, and vote on baby names.</h2>
+      <p class="sub">Name the Baby is a free one-page baby-name tool for parents and families who want more than a static list. Search 1,500 names, build a shortlist, test full-name flow, create new possibilities, and let family or friends vote on the finalists.</p>
+      <div class="seo-grid">
+        <article class="seo-item">
+          <h3>Baby name generator</h3>
+          <p>Explore boy names, girl names, and unisex baby names by origin, style, first letter, syllables, name length, ending sound, and recent U.S. popularity. You can also add a last name for a surname preview.</p>
+        </article>
+        <article class="seo-item">
+          <h3>Baby name creator with meanings</h3>
+          <p>Use the Name Creation Lab to build unique baby-name ideas from a desired meaning, source word, language inspiration, or two family names. Creative constructions are clearly labeled instead of being presented as traditional names.</p>
+        </article>
+        <article class="seo-item">
+          <h3>Family baby name poll</h3>
+          <p>Save your favorite baby names, compare finalists in Name Battle, and share a live baby-name voting link. Friends and relatives can vote from their own devices without creating an account.</p>
+        </article>
+      </div>
+      <div class="seo-note"><b>Baby name meanings and popularity:</b> reviewed profiles include meaning and origin notes where available, while matching names can use official recent U.S. Social Security Administration popularity data. Names outside the recent Top 200 are not automatically described as rare.</div>
+    </section>
+
     <section class="card sponsor-panel">
       <div>
         <div class="eyebrow" style="color:#f3c7d1">Sponsor the naming moment</div>
@@ -664,7 +703,7 @@
     </section>
 
     <footer>
-      V16 retention one-page build with 1,500 name records, live family voting, sponsor intake, monetization-ready placements, and privacy-light analytics. Popularity badges use the U.S. Social Security Administration’s exact 2025 Top 10 where available and its official 2020–2025 Top 200 recent-period rankings for broader popularity context. Name meanings, language roots, cultural notes, and generated-name constructions should receive final editorial and linguistic review before public launch.
+      V17 Google-discovery one-page build with 1,500 name records, live family voting, sponsor intake, monetization-ready placements, and privacy-light analytics. Popularity badges use the U.S. Social Security Administration’s exact 2025 Top 10 where available and its official 2020–2025 Top 200 recent-period rankings for broader popularity context. Name meanings, language roots, cultural notes, and generated-name constructions should receive final editorial and linguistic review before public launch.
       <div class="footer-links">
         <button data-modal="aboutModal">About</button>
         <button data-modal="privacyModal">Privacy</button>
@@ -1792,8 +1831,8 @@ function renderBallot(data,{live=false,afterVote=false}={}){
   return true;
 }
 const PUBLIC_SITE_ORIGIN="https://namethebaby.site";
-const DEFAULT_PAGE_TITLE="Name the Baby";
-const DEFAULT_PAGE_DESCRIPTION="Name the Baby is a one-page baby name finder and creation lab with smart recommendations, live family voting, custom names, saved favorites, and Name Battle.";
+const DEFAULT_PAGE_TITLE="Baby Name Generator, Creator & Family Poll | Name the Baby";
+const DEFAULT_PAGE_DESCRIPTION="Find boy, girl and unisex baby names with meanings, popularity filters and surname previews. Create unique names, save favorites and share a family poll.";
 function setBallotDocumentContext(data){
   const label=(data?.label||"").trim(),family=(data?.family||"").trim();
   document.title=label?`Vote on ${label} | Name the Baby`:"Baby Name Vote | Name the Baby";
@@ -1806,7 +1845,7 @@ function resetDocumentContext(){
   document.title=DEFAULT_PAGE_TITLE;
   const meta=document.querySelector('meta[name="description"]');if(meta)meta.content=DEFAULT_PAGE_DESCRIPTION;
   const ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=DEFAULT_PAGE_TITLE;
-  const ogDesc=document.querySelector('meta[property="og:description"]');if(ogDesc)ogDesc.content="One tiny human. One very big decision. Explore 1,500+ names, create new ones, shortlist favorites, and share a family ballot.";
+  const ogDesc=document.querySelector('meta[property="og:description"]');if(ogDesc)ogDesc.content="Explore 1,500+ baby names, create unique names, preview them with a surname, save favorites, and share a live family baby-name poll.";
 }
 function stopBallotSync(){if(ballotSyncTimer){clearInterval(ballotSyncTimer);ballotSyncTimer=null;}}
 async function refreshLiveBallot({quiet=false}={}){
