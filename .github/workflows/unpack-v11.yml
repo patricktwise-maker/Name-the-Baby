@@ -1,0 +1,50 @@
+name: Unpack V11 production HTML
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/unpack-v11.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Replace browser loader with real V11 HTML
+        shell: python
+        run: |
+          from pathlib import Path
+          import base64, gzip, re, sys
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+          match = re.search(r'const b64="([A-Za-z0-9+/=]+)";', text)
+          if not match:
+              print('No packed V11 payload found; nothing to change.')
+              sys.exit(0)
+
+          html = gzip.decompress(base64.b64decode(match.group(1)))
+          if b'Name the Baby' not in html or b'<!DOCTYPE html>' not in html:
+              raise RuntimeError('Decoded payload did not look like the Name the Baby app.')
+
+          path.write_bytes(html)
+          print(f'Unpacked {len(html):,} bytes into index.html')
+
+      - name: Commit repaired production file
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "No repair needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Fix V11 browser loading"
+          git push
