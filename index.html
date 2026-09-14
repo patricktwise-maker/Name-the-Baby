@@ -1751,10 +1751,20 @@ function resetSurprise(){
 }
 function openModal(id){const m=$(id);if(!m)return;m.classList.add("show");m.querySelector("input,button,select,textarea")?.focus();}
 function closeModal(m){m.classList.remove("show");}
-document.querySelectorAll("[data-modal]").forEach(b=>b.addEventListener("click",()=>openModal(b.dataset.modal)));
+document.querySelectorAll("[data-modal]").forEach(b=>b.addEventListener("click",()=>{
+  openModal(b.dataset.modal);
+  if(b.dataset.modal==="sponsorModal")logEvent("sponsor_opened",{source:b.id||"modal_trigger"});
+}));
 document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",()=>closeModal(b.closest(".modal-backdrop"))));
 document.querySelectorAll(".modal-backdrop").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)closeModal(m);}));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".modal-backdrop.show").forEach(closeModal);});
+let sponsorFormStarted=false;
+["sCompany","sName","sEmail","sBudget","sNote"].forEach(id=>{
+  const el=$(id);
+  if(el)el.addEventListener("focus",()=>{
+    if(!sponsorFormStarted){sponsorFormStarted=true;logEvent("sponsor_form_started",{});}
+  },{once:true});
+});
 async function copySponsorInquiry(){
   const company=$("sCompany").value.trim();
   const name=$("sName").value.trim();
@@ -1769,7 +1779,7 @@ async function copySponsorInquiry(){
     $("copySponsor").disabled=true;$("copySponsor").textContent="SENDING…";
     const {data,error}=await ntbRpc("submit_sponsor_inquiry",{p_company:company,p_contact_name:name,p_email:email,p_budget:budget,p_note:fullNote,p_session_token:analyticsToken()});
     $("copySponsor").disabled=false;$("copySponsor").textContent="SEND SPONSOR INQUIRY";
-    if(error){console.error(error);toast("Inquiry could not be sent");return;}
+    if(error){console.error(error);logEvent("sponsor_inquiry_error",{package:packageName});toast("Inquiry could not be sent");return;}
     toast("Sponsor inquiry sent");logEvent("sponsor_inquiry",{submitted:true,package:packageName});closeModal($("sponsorModal"));return;
   }
   try{await navigator.clipboard.writeText(copy);toast("Demo mode: inquiry copied");closeModal($("sponsorModal"));}catch(e){toast("Copy is unavailable in this browser");}
@@ -1786,8 +1796,10 @@ function chooseSponsorPackage(packageName){
 document.querySelectorAll("[data-package]").forEach(b=>b.addEventListener("click",()=>chooseSponsorPackage(b.dataset.package)));
 $("namePartnerBtn").addEventListener("click",()=>chooseSponsorPackage("Featured Partner"));
 $("sPackage").addEventListener("change",()=>{
-  $("packageSelected").textContent=`Selected partnership: ${$("sPackage").value}`;
+  const packageName=$("sPackage").value;
+  $("packageSelected").textContent=`Selected partnership: ${packageName}`;
   $("packageSelected").classList.add("show");
+  logEvent("sponsor_package_interest",{package:packageName,source:"selector"});
 });
 
 $("generateBtn").addEventListener("click",()=>generate(false));
