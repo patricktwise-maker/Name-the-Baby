@@ -21,16 +21,22 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-          import base64, gzip, re, sys
+          import base64, gzip, sys
 
           path = Path('index.html')
           text = path.read_text(encoding='utf-8')
-          match = re.search(r'const b64="([A-Za-z0-9+/=]+)";', text)
-          if not match:
+          marker = 'const b64="'
+          start = text.find(marker)
+          if start == -1:
               print('No packed V11 payload found; nothing to change.')
               sys.exit(0)
+          start += len(marker)
+          end = text.find('";', start)
+          if end == -1:
+              raise RuntimeError('Packed V11 payload start found but end marker is missing.')
 
-          html = gzip.decompress(base64.b64decode(match.group(1)))
+          payload = text[start:end]
+          html = gzip.decompress(base64.b64decode(payload))
           if b'Name the Baby' not in html or b'<!DOCTYPE html>' not in html:
               raise RuntimeError('Decoded payload did not look like the Name the Baby app.')
 
