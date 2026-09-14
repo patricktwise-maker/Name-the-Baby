@@ -283,6 +283,10 @@
     .monetize-copy{font-size:.78rem;line-height:1.45;color:var(--muted)}
     .monetize-copy b{display:block;color:var(--ink);font-size:.86rem;margin-bottom:2px}
     .monetize-cta{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 11px;font-size:.74rem;font-weight:900;cursor:pointer}
+    a.monetize-cta{display:inline-block;text-decoration:none;color:var(--ink);text-align:center}
+    .partner-action{flex:0 0 auto;display:flex;flex-direction:column;gap:6px;align-items:stretch}
+    .partner-disclosure{margin-top:6px;font-size:.66rem;line-height:1.4;color:#8a7f86;max-width:520px}
+    .partner-disclosure b{color:#675d65}
     .sponsor-packages{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
     .package-card{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.07);border-radius:16px;padding:14px}
     .package-card.featured{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.28)}
@@ -376,6 +380,10 @@
         <div class="ballot-actions">
           <button class="btn keep" id="shareVoteBtn">SHARE MY VOTE</button>
           <button class="btn" id="startMyOwnBtn">NAME MY OWN BABY</button>
+        </div>
+        <div class="monetize-card" id="postVotePartnerCard" data-partner-slot="post_vote">
+          <div class="monetize-copy"><b id="postVotePartnerTitle"></b><span id="postVotePartnerBody"></span><div class="partner-disclosure" id="postVotePartnerDisclosure" hidden></div></div>
+          <div class="partner-action"><a class="monetize-cta" id="postVotePartnerLink" href="#" target="_blank" rel="sponsored noopener noreferrer" hidden>VIEW OFFER</a></div>
         </div>
       </div>
       <div class="viral-tag">One page · no account required</div>
@@ -510,9 +518,9 @@
             <button class="btn" id="shareBtn">SHARE</button>
             <button class="btn" id="nextBtn">ANOTHER NAME</button>
           </div>
-          <div class="monetize-card" id="namePartnerCard">
-            <div class="monetize-copy"><b id="namePartnerTitle">Personalize this name</b><span>Reserved for a tasteful partner offer such as a nursery sign, blanket, keepsake, or registry item.</span></div>
-            <button class="monetize-cta" id="namePartnerBtn">PARTNER WITH US</button>
+          <div class="monetize-card" id="namePartnerCard" data-partner-slot="name_personalization">
+            <div class="monetize-copy"><b id="namePartnerTitle">Personalize this name</b><span id="namePartnerBody">Reserved for a tasteful partner offer such as a nursery sign, blanket, keepsake, or registry item.</span><div class="partner-disclosure" id="namePartnerDisclosure" hidden></div></div>
+            <div class="partner-action"><a class="monetize-cta" id="namePartnerLink" href="#" target="_blank" rel="sponsored noopener noreferrer" hidden>VIEW OFFER</a><button class="monetize-cta" id="namePartnerBtn">PARTNER WITH US</button></div>
           </div>
         </div>
       </div>
@@ -656,6 +664,10 @@
         </div>
         <div class="share-url" id="shareUrlPreview"></div><div class="setup-hint" id="setupHint">Launch services need your Supabase project URL and browser-safe publishable key. Until connected, family ballots automatically use the self-contained demo link and sponsor inquiries copy locally.</div>
       </div>
+      <div class="monetize-card" id="shortlistPartnerCard" data-partner-slot="shortlist">
+        <div class="monetize-copy"><b id="shortlistPartnerTitle"></b><span id="shortlistPartnerBody"></span><div class="partner-disclosure" id="shortlistPartnerDisclosure" hidden></div></div>
+        <div class="partner-action"><a class="monetize-cta" id="shortlistPartnerLink" href="#" target="_blank" rel="sponsored noopener noreferrer" hidden>VIEW OFFER</a></div>
+      </div>
       <div class="battle" id="battle">
         <h3>Pick the winner</h3><div class="sub">Tap the name you like more. The winners build their own local score.</div>
         <div class="battle-box"><button class="fighter" id="fighterA"></button><div class="vs">VS</div><button class="fighter" id="fighterB"></button></div>
@@ -703,7 +715,7 @@
     </section>
 
     <footer>
-      V17 Google-discovery one-page build with 1,500 name records, live family voting, sponsor intake, monetization-ready placements, and privacy-light analytics. Popularity badges use the U.S. Social Security Administration’s exact 2025 Top 10 where available and its official 2020–2025 Top 200 recent-period rankings for broader popularity context. Name meanings, language roots, cultural notes, and generated-name constructions should receive final editorial and linguistic review before public launch.
+      V18 sponsor-and-affiliate-ready one-page build with 1,500 name records, live family voting, sponsor intake, monetization-ready placements, and privacy-light analytics. Popularity badges use the U.S. Social Security Administration’s exact 2025 Top 10 where available and its official 2020–2025 Top 200 recent-period rankings for broader popularity context. Name meanings, language roots, cultural notes, and generated-name constructions should receive final editorial and linguistic review before public launch.
       <div class="footer-links">
         <button data-modal="aboutModal">About</button>
         <button data-modal="privacyModal">Privacy</button>
@@ -746,7 +758,7 @@
     <div class="modal"><button class="close" data-close aria-label="Close">×</button>
       <h2 id="privacyTitle">Privacy preview</h2>
       <div class="sub">Name the Baby keeps personal naming preferences local unless a visitor intentionally creates a shared ballot or submits a sponsor inquiry.</div>
-      <p class="fineprint" style="font-size:.86rem">Favorites and local Name Battle scores stay in the browser. When the launch backend is connected, the site may record privacy-light product events such as page views, generations, saves, passes, Lab use, ballot creation, and voting without sending surnames or exact generated-name choices in analytics. Shared ballots store the family/label text and ballot names entered by the creator. Sponsor inquiries store the contact information the sponsor submits. Replace this preview with final legal language before commercial launch.</p>
+      <p class="fineprint" style="font-size:.86rem">Favorites and local Name Battle scores stay in the browser. When the launch backend is connected, the site may record privacy-light product events such as page views, generations, saves, passes, Lab use, ballot creation, voting, and aggregate partner-offer impressions/clicks without sending surnames or exact generated-name choices in analytics. Shared ballots store the family/label text and ballot names entered by the creator. Sponsor inquiries store the contact information the sponsor submits. Replace this preview with final legal language before commercial launch.</p>
     </div>
   </div>
 
@@ -754,7 +766,7 @@
     <div class="modal"><button class="close" data-close aria-label="Close">×</button>
       <h2 id="termsTitle">Terms preview</h2>
       <div class="sub">Name information is provided for discovery and entertainment, not as legal, genealogical, linguistic, or cultural advice.</div>
-      <p class="fineprint" style="font-size:.86rem">Meanings, origins, pronunciation, and popularity can vary by language, region, source, and time. Public-launch content should receive final editorial review and popularity data should identify its source and year.</p>
+      <p class="fineprint" style="font-size:.86rem">Meanings, origins, pronunciation, and popularity can vary by language, region, source, and time. Public-launch content should receive final editorial review and popularity data should identify its source and year. Some clearly labeled partner links may be sponsored or affiliate links; Name the Baby may receive compensation or a commission when a visitor uses an eligible link.</p>
     </div>
   </div>
 
@@ -813,6 +825,13 @@
           <div class="retention-card"><span>Return visits</span><strong id="omReturnVisits">0</strong></div>
           <div class="retention-card"><span>Visitor return rate</span><strong id="omReturnRate">0%</strong></div>
           <div class="retention-card"><span>Avg. return gap</span><strong id="omReturnGap">0h</strong></div>
+        </div>
+        <div class="field-label" style="margin-top:14px"><span>Monetization</span><span class="optional">sponsor + affiliate readiness</span></div>
+        <div class="retention-grid">
+          <div class="retention-card"><span>Partner impressions</span><strong id="omPartnerImpressions">0</strong></div>
+          <div class="retention-card"><span>Partner clicks</span><strong id="omPartnerClicks">0</strong></div>
+          <div class="retention-card"><span>Partner CTR</span><strong id="omPartnerCtr">0%</strong></div>
+          <div class="retention-card"><span>Unique clickers</span><strong id="omPartnerClickers">0</strong></div>
         </div>
         <div class="owner-conversions">
           <div class="owner-conversion">Ballot open to vote<b id="omVoteRate">0%</b></div>
@@ -1552,6 +1571,55 @@ function why(n){
   if(!bits.length)bits.push("has a balanced, versatile feel");
   return `This one ${bits.slice(0,2).join(" and ")}.`;
 }
+const partnerOfferCache=new Map();
+const partnerImpressionSeen=new Set();
+const PARTNER_SLOT_IDS={
+  name_personalization:{card:"namePartnerCard",title:"namePartnerTitle",body:"namePartnerBody",disclosure:"namePartnerDisclosure",link:"namePartnerLink"},
+  shortlist:{card:"shortlistPartnerCard",title:"shortlistPartnerTitle",body:"shortlistPartnerBody",disclosure:"shortlistPartnerDisclosure",link:"shortlistPartnerLink"},
+  post_vote:{card:"postVotePartnerCard",title:"postVotePartnerTitle",body:"postVotePartnerBody",disclosure:"postVotePartnerDisclosure",link:"postVotePartnerLink"}
+};
+async function getPartnerOffer(slot){
+  if(partnerOfferCache.has(slot))return partnerOfferCache.get(slot);
+  if(!backendReady()){partnerOfferCache.set(slot,null);return null;}
+  const {data,error}=await ntbRpc("get_partner_offer",{p_slot:slot});
+  if(error||!data?.destination_url){partnerOfferCache.set(slot,null);return null;}
+  try{const u=new URL(data.destination_url);if(u.protocol!=="https:")throw new Error("https required");}
+  catch(e){partnerOfferCache.set(slot,null);return null;}
+  partnerOfferCache.set(slot,data);return data;
+}
+function hidePartnerSlot(slot){
+  const ids=PARTNER_SLOT_IDS[slot];if(!ids)return;
+  if(slot==="name_personalization")return;
+  $(ids.card)?.classList.remove("show");
+}
+async function renderPartnerSlot(slot){
+  const ids=PARTNER_SLOT_IDS[slot];if(!ids)return;
+  const offer=await getPartnerOffer(slot);
+  if(!offer){hidePartnerSlot(slot);return;}
+  const card=$(ids.card),title=$(ids.title),body=$(ids.body),disclosure=$(ids.disclosure),link=$(ids.link);
+  if(!card||!title||!body||!disclosure||!link)return;
+  title.textContent=offer.headline||offer.partner_name||"Partner offer";
+  body.textContent=offer.body||"";
+  disclosure.hidden=false;
+  disclosure.textContent=(offer.relationship==="affiliate"?"Affiliate disclosure: ":"Sponsored placement: ")+(offer.disclosure||"Name the Baby may receive compensation from this partner.");
+  link.textContent=offer.cta||"VIEW OFFER";
+  link.href=offer.destination_url;
+  link.hidden=false;
+  if(slot==="name_personalization")$("namePartnerBtn").hidden=true;
+  card.classList.add("show");
+  const impressionKey=`${slot}:${offer.id}`;
+  if(!partnerImpressionSeen.has(impressionKey)){
+    partnerImpressionSeen.add(impressionKey);
+    logEvent("partner_impression",{slot,relationship:offer.relationship||"unknown",partner_id:String(offer.id||"").slice(0,40)});
+  }
+}
+function trackPartnerClick(slot){
+  const offer=partnerOfferCache.get(slot);if(!offer)return;
+  logEvent("partner_click",{slot,relationship:offer.relationship||"unknown",partner_id:String(offer.id||"").slice(0,40)});
+}
+Object.entries(PARTNER_SLOT_IDS).forEach(([slot,ids])=>{
+  const link=$(ids.link);if(link)link.addEventListener("click",()=>trackPartnerClick(slot));
+});
 const NTB_RETURN_LAST_KEY="ntb16_last_visit_at";
 const NTB_RETURN_SESSION_KEY="ntb16_session_started";
 const NTB_RECENT_NAMES_KEY="ntb16_recent_names";
@@ -1628,6 +1696,7 @@ function renderResult(){
   $("saveBtn").textContent=state.saved.includes(n.name)?"♥ SAVED":"♡ KEEP IT";
   $("namePartnerCard").classList.add("show");
   $("namePartnerTitle").textContent=`Personalize ${n.name}`;
+  renderPartnerSlot("name_personalization");
 
 }
 function saveCurrent(){
@@ -1653,6 +1722,7 @@ function renderShortlist(){
   $("battleBtn").disabled=state.saved.length<2;$("battleBtn").style.opacity=state.saved.length<2?".45":"1";
   $("shareShortlistBtn").disabled=state.saved.length<2;$("shareShortlistBtn").style.opacity=state.saved.length<2?".45":"1";
   if($("shareBuilder").classList.contains("show"))renderSharePreview();
+  if(state.saved.length)renderPartnerSlot("shortlist");else $("shortlistPartnerCard")?.classList.remove("show");
   renderBattleBoard();
 }
 $("shortlist").addEventListener("click",e=>{
@@ -1827,6 +1897,7 @@ function renderBallot(data,{live=false,afterVote=false}={}){
   setBallotDocumentContext(data);
   renderBallotStats(live&&(afterVote||hasPrior));
   if(live&&hasPrior)startBallotSync();
+  if(hasPrior)renderPartnerSlot("post_vote");
   setTimeout(()=>$("ballotPanel").scrollIntoView({behavior:"smooth",block:"start"}),100);
   return true;
 }
@@ -1923,6 +1994,7 @@ async function castBallotVote(name){
   const target=activeBallot.label||"the baby";
   $("ballotVoteCopy").textContent=activeBallot.live?`Your vote for ${name} is saved. The live totals above are updated.`:`You picked ${name} for ${target}. This demo ballot does not aggregate votes across devices.`;
   $("ballotAfter").classList.add("show");
+  renderPartnerSlot("post_vote");
 }
 async function shareBallotVote(){
   if(!activeBallotVote||!activeBallot)return;const family=activeBallot.family?` for ${activeBallot.family}`:"";const copy=`I voted ${activeBallotVote}${family}. Cast your vote on Name the Baby.`;const rawUrl=activeBallot.live?liveBallotUrl(activeBallot.code):location.href;const shared=attributedShareUrl(rawUrl,"vote_share");
@@ -1990,6 +2062,15 @@ async function loadOwnerMetrics(){
   if(error||!data?.ok){sessionStorage.removeItem(OWNER_METRICS_SESSION_KEY);$("ownerDashboard").classList.remove("show");setOwnerStatus("Access key was not accepted.","bad");return;}
   sessionStorage.setItem(OWNER_METRICS_SESSION_KEY,key);
   renderOwnerMetrics(data);
+  const monetization=await ntbRpc("get_owner_monetization",{p_owner_key:key});
+  if(!monetization.error&&monetization.data?.ok)renderOwnerMonetization(monetization.data);
+}
+function renderOwnerMonetization(data){
+  if(!data?.ok)return;
+  $("omPartnerImpressions").textContent=ownerNum(data.impressions);
+  $("omPartnerClicks").textContent=ownerNum(data.clicks);
+  $("omPartnerCtr").textContent=`${Number(data.partner_ctr_pct||0).toFixed(1)}%`;
+  $("omPartnerClickers").textContent=ownerNum(data.unique_clickers);
 }
 function clearOwnerMetricsAccess(){sessionStorage.removeItem(OWNER_METRICS_SESSION_KEY);$("ownerMetricsKey").value="";$("ownerDashboard").classList.remove("show");setOwnerStatus("Owner access cleared from this browser tab.");}
 function openModal(id){const m=$(id);if(!m)return;m.classList.add("show");m.querySelector("input,button,select,textarea")?.focus();}
