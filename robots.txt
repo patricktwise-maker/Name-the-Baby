@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Allow: /api/og
 
-Sitemap: https://namethebaby.site/sitemap.xml
+Sitemap: https://www.namethebaby.site/sitemap.xml
