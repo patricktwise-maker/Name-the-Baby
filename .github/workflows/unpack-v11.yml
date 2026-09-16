@@ -1,4 +1,4 @@
-name: V18.2 strict generator filters
+name: V19 SEO ranking readiness
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 jobs:
-  strict_generator_filters:
+  seo_ranking_readiness:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -23,10 +23,13 @@ jobs:
       - name: Preserve Impact website verification
         run: python .github/scripts/impact_verify.py
 
-      - name: Apply strict generator filter fix
+      - name: Preserve strict generator filters
         run: python .github/scripts/v18_2_filter_integrity.py
 
-      - name: Validate browser JavaScript and filter integrity
+      - name: Apply V19 SEO ranking patch
+        run: python .github/scripts/v19_seo_ranking.py
+
+      - name: Validate browser JavaScript and SEO integrity
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -40,33 +43,29 @@ jobs:
               'V18 sponsor-and-affiliate-ready one-page build',
               "<meta name='impact-site-verification' value='9370d4fd-1b03-442a-844d-163db085d91f'>",
               'V18.2 strict generator filter integrity',
-              'renderNoExactMatch()',
-              'Your selected letter and origin will never be silently ignored.',
-              'get_partner_offer',
-              'partner_impression',
-              'partner_click'
+              'V19 SEO ranking readiness',
+              'https://www.namethebaby.site/',
+              'Baby names starting with A–Z',
+              'Baby names by origin or tradition',
+              'Baby names with meanings',
+              'Baby name shortlist & family poll'
           ]
           missing = [x for x in required if x not in text]
           if missing:
-              raise SystemExit(f'Missing V18.2 pieces: {missing}')
-          if 'No exact match. Loosening the filters.' in text:
-              raise SystemExit('Unsafe loose-filter fallback is still present')
-          generate = re.search(r'function generate\(forceAny=false\)\{(.*?)\n\}', text, re.S)
-          if not generate:
-              raise SystemExit('generate() not found')
-          if 'pool=names.filter' in generate.group(1):
-              raise SystemExit('generate() still contains a broad fallback pool')
+              raise SystemExit(f'Missing V19 pieces: {missing}')
+          if '<link rel="canonical" href="https://namethebaby.site/"' in text:
+              raise SystemExit('Old non-www canonical remains')
           PY
           node --check /tmp/ntb.js
 
-      - name: Commit strict filter fix
+      - name: Commit SEO ranking improvements
         run: |
           if git diff --quiet -- index.html; then
-            echo "No change needed."
+            echo "No index change needed."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Fix generator filter integrity"
+          git commit -m "Improve one-page SEO ranking readiness"
           git push
