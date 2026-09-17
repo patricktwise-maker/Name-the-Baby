@@ -1,4 +1,4 @@
-name: V19 SEO ranking readiness
+name: V19.1 verified catalog SEO
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
       - name: Preserve strict generator filters
         run: python .github/scripts/v18_2_filter_integrity.py
 
-      - name: Apply V19 SEO ranking patch
+      - name: Apply V19.1 SEO ranking patch
         run: python .github/scripts/v19_seo_ranking.py
 
       - name: Validate browser JavaScript and SEO integrity
@@ -43,16 +43,18 @@ jobs:
               'V18 sponsor-and-affiliate-ready one-page build',
               "<meta name='impact-site-verification' value='9370d4fd-1b03-442a-844d-163db085d91f'>",
               'V18.2 strict generator filter integrity',
-              'V19 SEO ranking readiness',
+              'V19.1 SEO: verified crawlable catalog examples + intent coverage',
               'https://www.namethebaby.site/',
               'Baby names starting with A–Z',
               'Baby names by origin or tradition',
               'Baby names with meanings',
-              'Baby name shortlist & family poll'
+              'Baby name shortlist & family poll',
+              'Sophia', 'Imani', 'Aaliyah', 'Benjamin', 'Saoirse', 'Magnolia', 'Willow',
+              '"@type": "WebApplication"'
           ]
           missing = [x for x in required if x not in text]
           if missing:
-              raise SystemExit(f'Missing V19 pieces: {missing}')
+              raise SystemExit(f'Missing V19.1 pieces: {missing}')
           if '<link rel="canonical" href="https://namethebaby.site/"' in text:
               raise SystemExit('Old non-www canonical remains')
           PY
@@ -67,5 +69,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Improve one-page SEO ranking readiness"
+          git commit -m "Add verified catalog examples for search intent"
           git push
