@@ -1,6 +1,6 @@
 # Name the Baby SEO Keyword Map
 
-Updated: 2026-09-23
+Updated: 2026-09-26
 
 This document keeps the one-page SEO strategy focused on real user intent. It is an editorial map, not a license to create doorway pages. New visible examples must come only from reviewed catalog records.
 
@@ -142,3 +142,14 @@ For each bucket, record a baseline 28-day period and compare subsequent 28-day p
 ## Current research signal
 
 Current baby-name competitors prominently organize discovery around gender, A-Z, origin, style, unique/uncommon names, meanings, and syllables. The Bump's current generator exposes gender, initial, origin, style, meaning and syllables as primary controls, while Nameberry's current A-Z/search experience exposes starts-with, ends-with, containing letters, syllables, origin and meaning. Nameberry also maintains active meaning collections around hope, love, strength, new beginnings, grace and happiness/joy. Name the Baby should compete by combining verified discovery with its generator, surname preview, shortlist, comparison/name-battle, Name Creation Lab, and family voting rather than by copying competitors' page-count strategy.
+
+
+## Machine-readable V19 handoff
+
+The reviewed production profiles are exported to `docs/catalog-reviewed.json`. Directory-only records are excluded. The export deliberately omits popularity because current popularity is maintained as a separate dated SSA layer.
+
+Run `node scripts/seo-readiness.mjs` to validate the artifact and calculate readiness for origin + gender, first letter + gender, style, and syllable clusters. The default publication floor is five matching reviewed records, with eight preferred.
+
+Current reviewed inventory: 209 profiles. The counter shows several qualifying origin + gender groups, including Hebrew boy names, Arabic girl names, Irish boy names, and Spanish girl names. These four groups now have crawlable homepage examples drawn directly from the reviewed artifact.
+
+Literal meaning clusters remain on hold until V19 adds explicit meaning-taxonomy tags. Keyword matching against prose definitions is not sufficient evidence that a name literally belongs in “names that mean strength,” “names that mean hope,” or similar collections.
