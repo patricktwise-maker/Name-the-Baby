@@ -1,0 +1,2668 @@
+{
+  "schemaVersion": 1,
+  "generatedOn": "2026-09-26",
+  "source": "index.html",
+  "scope": "Curated profiles only; directory-only records are excluded.",
+  "recordCount": 209,
+  "fields": {
+    "reviewStatus": "curated means the production catalog marks the profile as editorially curated; it is not a confidence score.",
+    "popularity": "Excluded. Popularity is maintained separately from this reviewed-profile artifact."
+  },
+  "records": [
+    {
+      "name": "Liam",
+      "gender": "boy",
+      "origin": "Irish",
+      "meaning": "An Irish short form of William, commonly associated with resolute protection.",
+      "styles": [
+        "classic",
+        "strong",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Noah",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally associated with rest or comfort.",
+      "styles": [
+        "biblical",
+        "classic",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Oliver",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A long-used name often associated with the olive tree and peace.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Theodore",
+      "gender": "boy",
+      "origin": "Greek",
+      "meaning": "A Greek-derived name traditionally interpreted as “gift of God.”",
+      "styles": [
+        "classic",
+        "vintage",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Henry",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "A traditional royal name with Germanic roots associated with home and rule.",
+      "styles": [
+        "classic",
+        "strong",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "James",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "A classic English form of the biblical name Jacob.",
+      "styles": [
+        "classic",
+        "strong",
+        "biblical"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Elijah",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally interpreted as “my God is Yahweh.”",
+      "styles": [
+        "biblical",
+        "classic",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Mateo",
+      "gender": "boy",
+      "origin": "Spanish",
+      "meaning": "The Spanish form of Matthew, traditionally associated with “gift of God.”",
+      "styles": [
+        "modern",
+        "classic"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "William",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "A classic name with Germanic roots associated with will and protection.",
+      "styles": [
+        "classic",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Lucas",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A Latin form related to Luke, historically linked with Lucania.",
+      "styles": [
+        "classic",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Micah",
+      "gender": "unisex",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally interpreted as “Who is like God?”",
+      "styles": [
+        "biblical",
+        "modern",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Malachi",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name commonly associated with “my messenger.”",
+      "styles": [
+        "biblical",
+        "strong",
+        "rare"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Elias",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A form of Elijah used across Greek, Latin, and several modern languages.",
+      "styles": [
+        "biblical",
+        "elegant",
+        "classic"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Josiah",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical name carried by a king of Judah.",
+      "styles": [
+        "biblical",
+        "classic",
+        "southern"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Ezra",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally associated with help.",
+      "styles": [
+        "biblical",
+        "vintage",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Levi",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name tied to one of the tribes of Israel.",
+      "styles": [
+        "biblical",
+        "modern",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Asher",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally associated with happiness or blessing.",
+      "styles": [
+        "biblical",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Xavier",
+      "gender": "boy",
+      "origin": "Spanish",
+      "meaning": "A name linked to the Basque place name Javier and widely used through Spanish tradition.",
+      "styles": [
+        "modern",
+        "strong",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Miles",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "A long-used European name with several proposed historical roots.",
+      "styles": [
+        "classic",
+        "modern",
+        "elegant"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Julian",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A classical name derived from the Roman family name Julianus.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Adrian",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A Latin-derived name historically connected with the Roman name Hadrianus.",
+      "styles": [
+        "classic",
+        "elegant",
+        "modern"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Silas",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "An ancient name with biblical-era Greek and Latin usage.",
+      "styles": [
+        "biblical",
+        "vintage",
+        "southern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Roman",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A name associated with Rome and Roman identity.",
+      "styles": [
+        "strong",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "August",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "Derived from Augustus, a name associated with dignity and grandeur.",
+      "styles": [
+        "vintage",
+        "classic",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Beau",
+      "gender": "boy",
+      "origin": "French",
+      "meaning": "A French word meaning “handsome,” long used as a given name.",
+      "styles": [
+        "southern",
+        "classic"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Jasper",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "An old given name also strongly associated with the gemstone.",
+      "styles": [
+        "vintage",
+        "rare",
+        "southern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Callum",
+      "gender": "boy",
+      "origin": "Irish",
+      "meaning": "A Gaelic name traditionally connected with the dove.",
+      "styles": [
+        "rare",
+        "strong",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Dorian",
+      "gender": "boy",
+      "origin": "Greek",
+      "meaning": "A literary and classical-sounding name connected with the ancient Dorians.",
+      "styles": [
+        "rare",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Phoenix",
+      "gender": "unisex",
+      "origin": "Greek",
+      "meaning": "A mythological and nature-linked name associated with the legendary phoenix bird.",
+      "styles": [
+        "rare",
+        "strong",
+        "nature"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Zion",
+      "gender": "unisex",
+      "origin": "Hebrew",
+      "meaning": "A biblical place name deeply associated with Jerusalem.",
+      "styles": [
+        "biblical",
+        "modern",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Jordan",
+      "gender": "unisex",
+      "origin": "Hebrew",
+      "meaning": "A name associated with the Jordan River.",
+      "styles": [
+        "classic",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Amari",
+      "gender": "unisex",
+      "origin": "Multicultural",
+      "meaning": "A modern multicultural given name found across several naming traditions.",
+      "styles": [
+        "modern",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Avery",
+      "gender": "unisex",
+      "origin": "English",
+      "meaning": "A surname-derived given name with medieval English roots.",
+      "styles": [
+        "modern",
+        "classic"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Sage",
+      "gender": "unisex",
+      "origin": "English",
+      "meaning": "An English word name associated with wisdom and the aromatic herb.",
+      "styles": [
+        "rare",
+        "modern",
+        "nature"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Ellis",
+      "gender": "unisex",
+      "origin": "English",
+      "meaning": "A traditional surname and given name with Welsh and English usage.",
+      "styles": [
+        "classic",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Rowan",
+      "gender": "unisex",
+      "origin": "Irish",
+      "meaning": "A name connected with Gaelic surname traditions and the rowan tree.",
+      "styles": [
+        "modern",
+        "rare",
+        "nature"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "River",
+      "gender": "unisex",
+      "origin": "English",
+      "meaning": "An English nature word name.",
+      "styles": [
+        "modern",
+        "nature",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Skyler",
+      "gender": "unisex",
+      "origin": "English",
+      "meaning": "A modern English-language form developed from a Dutch surname.",
+      "styles": [
+        "modern",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Kai",
+      "gender": "unisex",
+      "origin": "Multicultural",
+      "meaning": "A short multicultural name with distinct meanings in several languages.",
+      "styles": [
+        "modern",
+        "strong",
+        "nature"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Olivia",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "A literary name long associated with the olive tree.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Charlotte",
+      "gender": "girl",
+      "origin": "French",
+      "meaning": "A French feminine form of Charles with a long royal history.",
+      "styles": [
+        "classic",
+        "elegant",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Emma",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A classic European name historically associated with wholeness or universality.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Amelia",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A traditional name with Germanic roots commonly associated with work or industriousness.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Sophia",
+      "gender": "girl",
+      "origin": "Greek",
+      "meaning": "A Greek name meaning “wisdom.”",
+      "styles": [
+        "classic",
+        "elegant",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Mia",
+      "gender": "girl",
+      "origin": "Multicultural",
+      "meaning": "A short international name used independently and as a form of Maria in some traditions.",
+      "styles": [
+        "modern",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Isabella",
+      "gender": "girl",
+      "origin": "Spanish",
+      "meaning": "A Spanish and Italian form of Elizabeth with centuries of royal use.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Evelyn",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A classic English given name that developed from a surname tradition.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Sofia",
+      "gender": "girl",
+      "origin": "Spanish",
+      "meaning": "An international form of Sophia, from the Greek word for wisdom.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Eliana",
+      "gender": "girl",
+      "origin": "Hebrew",
+      "meaning": "A name used in Hebrew and Romance-language traditions, often associated with “God has answered.”",
+      "styles": [
+        "biblical",
+        "elegant",
+        "modern"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Noelle",
+      "gender": "girl",
+      "origin": "French",
+      "meaning": "A French name associated with Christmas and the holiday season.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Zora",
+      "gender": "girl",
+      "origin": "Multicultural",
+      "meaning": "A name used in Slavic traditions and strongly associated in the U.S. with writer Zora Neale Hurston.",
+      "styles": [
+        "rare",
+        "strong",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Amara",
+      "gender": "girl",
+      "origin": "Multicultural",
+      "meaning": "A multicultural name found in several languages and naming traditions.",
+      "styles": [
+        "modern",
+        "elegant",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Naomi",
+      "gender": "girl",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally associated with pleasantness.",
+      "styles": [
+        "biblical",
+        "classic",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Camille",
+      "gender": "girl",
+      "origin": "French",
+      "meaning": "A French form of the ancient Roman name Camillus.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Simone",
+      "gender": "girl",
+      "origin": "French",
+      "meaning": "A French feminine form related to Simon.",
+      "styles": [
+        "classic",
+        "elegant",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Nia",
+      "gender": "girl",
+      "origin": "African",
+      "meaning": "A concise name used in several traditions, including Swahili contexts.",
+      "styles": [
+        "modern",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Aaliyah",
+      "gender": "girl",
+      "origin": "Arabic",
+      "meaning": "An Arabic name commonly associated with being exalted or elevated.",
+      "styles": [
+        "modern",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Maya",
+      "gender": "girl",
+      "origin": "Multicultural",
+      "meaning": "A widely international name with distinct roots in several cultures.",
+      "styles": [
+        "classic",
+        "modern",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Clara",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "A Latin-derived name associated with brightness or clarity.",
+      "styles": [
+        "vintage",
+        "classic",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Iris",
+      "gender": "girl",
+      "origin": "Greek",
+      "meaning": "A Greek mythological name associated with the rainbow and also the flower.",
+      "styles": [
+        "vintage",
+        "rare",
+        "nature"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Maeve",
+      "gender": "girl",
+      "origin": "Irish",
+      "meaning": "An Irish name rooted in ancient Gaelic legend.",
+      "styles": [
+        "rare",
+        "strong",
+        "vintage"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Ruby",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A gemstone name used as a given name for generations.",
+      "styles": [
+        "vintage",
+        "classic",
+        "nature"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Georgia",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A feminine form of George with especially strong Southern associations in the U.S.",
+      "styles": [
+        "southern",
+        "classic",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Savannah",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A place and word name strongly associated with the American South.",
+      "styles": [
+        "southern",
+        "modern",
+        "nature"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Magnolia",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A floral name associated with the magnolia tree.",
+      "styles": [
+        "southern",
+        "rare",
+        "vintage",
+        "nature"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Willow",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English nature name taken from the willow tree.",
+      "styles": [
+        "nature",
+        "modern",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Dahlia",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A floral name taken from the dahlia flower.",
+      "styles": [
+        "nature",
+        "rare",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Celeste",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "A Latin-derived name associated with the heavens or sky.",
+      "styles": [
+        "elegant",
+        "rare",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Serena",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "A Latin-derived name associated with serenity and calm.",
+      "styles": [
+        "elegant",
+        "classic",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Imani",
+      "gender": "girl",
+      "origin": "African",
+      "meaning": "A Swahili name associated with faith.",
+      "styles": [
+        "strong",
+        "modern"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Zuri",
+      "gender": "girl",
+      "origin": "African",
+      "meaning": "A Swahili name associated with beauty or goodness.",
+      "styles": [
+        "modern",
+        "strong",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Amina",
+      "gender": "girl",
+      "origin": "Arabic",
+      "meaning": "An Arabic name commonly associated with trustworthiness or faithfulness.",
+      "styles": [
+        "classic",
+        "elegant",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Layla",
+      "gender": "girl",
+      "origin": "Arabic",
+      "meaning": "An Arabic name associated with night.",
+      "styles": [
+        "elegant",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Nora",
+      "gender": "girl",
+      "origin": "Irish",
+      "meaning": "A widely used name with Irish and European naming roots.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Saoirse",
+      "gender": "girl",
+      "origin": "Irish",
+      "meaning": "An Irish name meaning “freedom.”",
+      "styles": [
+        "rare",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Lucia",
+      "gender": "girl",
+      "origin": "Spanish",
+      "meaning": "A Romance-language form related to Lucy and the Latin word for light.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Alma",
+      "gender": "girl",
+      "origin": "Spanish",
+      "meaning": "A short name used in Spanish and several European traditions; in Spanish, alma means “soul.”",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Benjamin",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally interpreted as “son of the right hand.”",
+      "styles": [
+        "classic",
+        "biblical",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Samuel",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally associated with God hearing or answering.",
+      "styles": [
+        "classic",
+        "biblical",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Daniel",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally interpreted as “God is my judge.”",
+      "styles": [
+        "classic",
+        "biblical",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Alexander",
+      "gender": "boy",
+      "origin": "Greek",
+      "meaning": "A Greek name traditionally associated with defending or protecting people.",
+      "styles": [
+        "classic",
+        "strong",
+        "elegant"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Michael",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally interpreted as “Who is like God?”",
+      "styles": [
+        "classic",
+        "biblical",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Ethan",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A Hebrew name traditionally associated with strength, firmness, or endurance.",
+      "styles": [
+        "classic",
+        "strong",
+        "biblical"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Sebastian",
+      "gender": "boy",
+      "origin": "Greek",
+      "meaning": "A classical name derived from Sebastianos, historically linked to the place name Sebaste.",
+      "styles": [
+        "classic",
+        "elegant",
+        "strong"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Leo",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A compact Latin name meaning “lion.”",
+      "styles": [
+        "classic",
+        "strong",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Owen",
+      "gender": "boy",
+      "origin": "Welsh",
+      "meaning": "A long-used Welsh name with ancient Celtic roots.",
+      "styles": [
+        "classic",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Jackson",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "An English patronymic surname meaning “son of Jack,” now widely used as a given name.",
+      "styles": [
+        "modern",
+        "strong",
+        "southern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Mason",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "An English occupational surname for a stoneworker that became a given name.",
+      "styles": [
+        "modern",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Luca",
+      "gender": "boy",
+      "origin": "Italian",
+      "meaning": "An Italian form related to Luke and the Latin name Lucas.",
+      "styles": [
+        "modern",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Logan",
+      "gender": "unisex",
+      "origin": "Scottish",
+      "meaning": "A Scottish surname and place-derived name that became a widely used given name.",
+      "styles": [
+        "modern",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Aiden",
+      "gender": "boy",
+      "origin": "Irish",
+      "meaning": "An English-language form of the Irish Aodhán, traditionally associated with fire.",
+      "styles": [
+        "modern",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Carter",
+      "gender": "unisex",
+      "origin": "English",
+      "meaning": "An English occupational surname historically connected with transporting goods by cart.",
+      "styles": [
+        "modern",
+        "strong",
+        "southern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Wyatt",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "A medieval English name with Germanic roots associated with strength in battle.",
+      "styles": [
+        "strong",
+        "southern",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Hudson",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "An English surname meaning “son of Hud,” later adopted as a given name.",
+      "styles": [
+        "modern",
+        "strong",
+        "southern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Gabriel",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally interpreted as “God is my strength.”",
+      "styles": [
+        "biblical",
+        "classic",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Isaac",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally associated with laughter.",
+      "styles": [
+        "biblical",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Lincoln",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "An English place and surname name strongly associated with Abraham Lincoln in the U.S.",
+      "styles": [
+        "strong",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Anthony",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A long-used name derived from the Roman family name Antonius.",
+      "styles": [
+        "classic",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Dylan",
+      "gender": "unisex",
+      "origin": "Welsh",
+      "meaning": "A Welsh mythological name traditionally connected with the sea.",
+      "styles": [
+        "classic",
+        "modern",
+        "nature"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Thomas",
+      "gender": "boy",
+      "origin": "Aramaic",
+      "meaning": "A biblical name derived from an Aramaic word meaning “twin.”",
+      "styles": [
+        "classic",
+        "biblical"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Maverick",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "A surname and English word name associated with independence.",
+      "styles": [
+        "modern",
+        "strong",
+        "rare"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Ezekiel",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally interpreted as “God strengthens.”",
+      "styles": [
+        "biblical",
+        "strong",
+        "rare"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Caleb",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name with an ancient meaning that is interpreted in several ways.",
+      "styles": [
+        "biblical",
+        "classic",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Cooper",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "An English occupational surname for a barrel maker that became a given name.",
+      "styles": [
+        "modern",
+        "southern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Wesley",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "An English surname and place-derived name historically associated with a western meadow.",
+      "styles": [
+        "classic",
+        "southern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Nathan",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A Hebrew name traditionally associated with giving or a gift.",
+      "styles": [
+        "biblical",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Nolan",
+      "gender": "boy",
+      "origin": "Irish",
+      "meaning": "An Irish surname name with Gaelic roots.",
+      "styles": [
+        "modern",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Dominic",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A Latin-derived name traditionally associated with “of the Lord.”",
+      "styles": [
+        "classic",
+        "strong",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Isaiah",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally interpreted as “God is salvation.”",
+      "styles": [
+        "biblical",
+        "strong",
+        "classic"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Jeremiah",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name with a traditional meaning connected with God exalting or appointing.",
+      "styles": [
+        "biblical",
+        "strong"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Joshua",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally interpreted as “God is salvation.”",
+      "styles": [
+        "biblical",
+        "classic",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Andrew",
+      "gender": "boy",
+      "origin": "Greek",
+      "meaning": "A Greek-derived name traditionally associated with bravery or manliness.",
+      "styles": [
+        "classic",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "David",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally associated with being beloved.",
+      "styles": [
+        "biblical",
+        "classic",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Joseph",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally associated with increase or addition.",
+      "styles": [
+        "biblical",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Nicholas",
+      "gender": "boy",
+      "origin": "Greek",
+      "meaning": "A Greek name traditionally interpreted as “victory of the people.”",
+      "styles": [
+        "classic",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Jonathan",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally interpreted as “God has given.”",
+      "styles": [
+        "biblical",
+        "classic"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Malcolm",
+      "gender": "boy",
+      "origin": "Scottish",
+      "meaning": "A Scottish Gaelic royal name historically associated with devotion to Saint Columba.",
+      "styles": [
+        "classic",
+        "strong",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Desmond",
+      "gender": "boy",
+      "origin": "Irish",
+      "meaning": "An Irish place and surname name later established as a given name.",
+      "styles": [
+        "classic",
+        "strong",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Marcus",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A classical Roman given name with ancient roots.",
+      "styles": [
+        "classic",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Andre",
+      "gender": "boy",
+      "origin": "French",
+      "meaning": "The French form of Andrew, ultimately from Greek.",
+      "styles": [
+        "classic",
+        "strong",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Khalil",
+      "gender": "boy",
+      "origin": "Arabic",
+      "meaning": "An Arabic name associated with friendship or a close companion.",
+      "styles": [
+        "strong",
+        "elegant",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Amir",
+      "gender": "boy",
+      "origin": "Arabic",
+      "meaning": "An Arabic name associated with leadership, command, or a prince.",
+      "styles": [
+        "strong",
+        "modern",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Zayn",
+      "gender": "boy",
+      "origin": "Arabic",
+      "meaning": "An Arabic name associated with beauty, grace, or adornment.",
+      "styles": [
+        "modern",
+        "strong",
+        "rare"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Idris",
+      "gender": "boy",
+      "origin": "Multicultural",
+      "meaning": "A name with distinct Arabic and Welsh naming traditions.",
+      "styles": [
+        "strong",
+        "rare",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Omar",
+      "gender": "boy",
+      "origin": "Arabic",
+      "meaning": "A long-established Arabic name associated in naming tradition with flourishing or long life.",
+      "styles": [
+        "classic",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Rafael",
+      "gender": "boy",
+      "origin": "Spanish",
+      "meaning": "The Spanish form of Raphael, a Hebrew-derived name traditionally interpreted as “God has healed.”",
+      "styles": [
+        "classic",
+        "elegant",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Santiago",
+      "gender": "boy",
+      "origin": "Spanish",
+      "meaning": "A Spanish name historically connected with Saint James.",
+      "styles": [
+        "strong",
+        "classic",
+        "elegant"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Thiago",
+      "gender": "boy",
+      "origin": "Spanish",
+      "meaning": "A Spanish and Portuguese given name historically related to James.",
+      "styles": [
+        "modern",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Enzo",
+      "gender": "boy",
+      "origin": "Italian",
+      "meaning": "An Italian given name with several historical routes and associations.",
+      "styles": [
+        "modern",
+        "strong",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Nico",
+      "gender": "boy",
+      "origin": "Italian",
+      "meaning": "A short form of names such as Nicholas or Niccolò.",
+      "styles": [
+        "modern",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Felix",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A Latin name traditionally associated with happiness, luck, or good fortune.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Hugo",
+      "gender": "boy",
+      "origin": "Germanic",
+      "meaning": "A name with Germanic roots traditionally associated with mind, thought, or spirit.",
+      "styles": [
+        "classic",
+        "vintage",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Declan",
+      "gender": "boy",
+      "origin": "Irish",
+      "meaning": "An old Irish name strongly associated with Saint Declan.",
+      "styles": [
+        "strong",
+        "classic",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Finn",
+      "gender": "boy",
+      "origin": "Irish",
+      "meaning": "An Irish name traditionally associated with fairness or whiteness and Irish legend.",
+      "styles": [
+        "strong",
+        "nature",
+        "classic"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Ronan",
+      "gender": "boy",
+      "origin": "Irish",
+      "meaning": "An Irish name traditionally interpreted as “little seal.”",
+      "styles": [
+        "rare",
+        "strong",
+        "nature"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Kieran",
+      "gender": "boy",
+      "origin": "Irish",
+      "meaning": "An Irish name traditionally associated with dark coloring.",
+      "styles": [
+        "classic",
+        "strong",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Atlas",
+      "gender": "boy",
+      "origin": "Greek",
+      "meaning": "A name from Greek mythology, where Atlas is a powerful Titan.",
+      "styles": [
+        "strong",
+        "rare",
+        "nature"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Orion",
+      "gender": "boy",
+      "origin": "Greek",
+      "meaning": "A Greek mythological name also associated with the prominent constellation.",
+      "styles": [
+        "rare",
+        "strong",
+        "nature"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Cassian",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A Latin-derived name connected with the Roman family name Cassius.",
+      "styles": [
+        "rare",
+        "elegant",
+        "classic"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Darius",
+      "gender": "boy",
+      "origin": "Persian",
+      "meaning": "An ancient Persian royal name with a long historical tradition.",
+      "styles": [
+        "strong",
+        "classic",
+        "rare"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Solomon",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name closely connected with the word for peace.",
+      "styles": [
+        "biblical",
+        "strong",
+        "classic"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Judah",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally associated with praise.",
+      "styles": [
+        "biblical",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Gideon",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name with ancient associations often linked to cutting or hewing.",
+      "styles": [
+        "biblical",
+        "strong",
+        "rare"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Tobias",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "meaning": "A biblical name derived from Hebrew and traditionally associated with God being good.",
+      "styles": [
+        "biblical",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Ava",
+      "gender": "girl",
+      "origin": "Multicultural",
+      "meaning": "A concise international name with several possible historical roots.",
+      "styles": [
+        "classic",
+        "modern",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Harper",
+      "gender": "unisex",
+      "origin": "English",
+      "meaning": "An English occupational surname for a harp player that became a given name.",
+      "styles": [
+        "modern",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Luna",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "The Latin word for “moon,” now widely used as a given name.",
+      "styles": [
+        "nature",
+        "modern",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Aurora",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "A Latin name meaning “dawn,” also the Roman goddess of dawn.",
+      "styles": [
+        "nature",
+        "elegant",
+        "classic"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Eleanor",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A classic royal name with medieval European roots.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Violet",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English floral name taken from the violet flower.",
+      "styles": [
+        "nature",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Elizabeth",
+      "gender": "girl",
+      "origin": "Hebrew",
+      "meaning": "A classic biblical name ultimately derived from Hebrew.",
+      "styles": [
+        "classic",
+        "biblical",
+        "elegant"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Hazel",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English nature name associated with the hazel tree and color.",
+      "styles": [
+        "nature",
+        "vintage",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Lily",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English floral name associated with the lily flower.",
+      "styles": [
+        "nature",
+        "classic",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Gianna",
+      "gender": "girl",
+      "origin": "Italian",
+      "meaning": "An Italian form related to Giovanna and ultimately John.",
+      "styles": [
+        "elegant",
+        "modern",
+        "classic"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Penelope",
+      "gender": "girl",
+      "origin": "Greek",
+      "meaning": "A name from Greek mythology, best known from Homer’s Odyssey.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Aria",
+      "gender": "girl",
+      "origin": "Italian",
+      "meaning": "An Italian musical word for a solo melody, now widely used as a given name.",
+      "styles": [
+        "modern",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Chloe",
+      "gender": "girl",
+      "origin": "Greek",
+      "meaning": "A Greek name traditionally associated with a young green shoot or blooming.",
+      "styles": [
+        "classic",
+        "nature",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Mila",
+      "gender": "girl",
+      "origin": "Slavic",
+      "meaning": "A Slavic-rooted name associated with graciousness or dear affection in related forms.",
+      "styles": [
+        "modern",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Abigail",
+      "gender": "girl",
+      "origin": "Hebrew",
+      "meaning": "A biblical Hebrew name traditionally associated with a father’s joy.",
+      "styles": [
+        "biblical",
+        "classic",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Ella",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A short classic name used independently and as a form of longer European names.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Scarlett",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English surname and color-associated word name.",
+      "styles": [
+        "modern",
+        "strong",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Emily",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "An English form of the Roman family name Aemilia.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Emilia",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "A feminine form connected with the ancient Roman family name Aemilius.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Lucy",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "A Latin-derived name traditionally connected with light.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Isla",
+      "gender": "girl",
+      "origin": "Scottish",
+      "meaning": "A Scottish name associated with the island of Islay.",
+      "styles": [
+        "modern",
+        "elegant",
+        "nature"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Ivy",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English botanical name taken from the evergreen climbing plant.",
+      "styles": [
+        "nature",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Alice",
+      "gender": "girl",
+      "origin": "French",
+      "meaning": "A classic name with Germanic roots associated with nobility.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Josephine",
+      "gender": "girl",
+      "origin": "French",
+      "meaning": "A French feminine form of Joseph.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Cecilia",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "A Latin-derived name with a long saintly and musical association.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Vivian",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "A Latin-derived name traditionally associated with life or being alive.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Elise",
+      "gender": "girl",
+      "origin": "French",
+      "meaning": "A French short form related to Elizabeth.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Genevieve",
+      "gender": "girl",
+      "origin": "French",
+      "meaning": "A historic French name with medieval European roots.",
+      "styles": [
+        "classic",
+        "vintage",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Delilah",
+      "gender": "girl",
+      "origin": "Hebrew",
+      "meaning": "A biblical name of Hebrew origin with an ancient and debated meaning.",
+      "styles": [
+        "biblical",
+        "elegant",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Eden",
+      "gender": "unisex",
+      "origin": "Hebrew",
+      "meaning": "A biblical place name associated with delight and paradise.",
+      "styles": [
+        "biblical",
+        "nature",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Esther",
+      "gender": "girl",
+      "origin": "Persian",
+      "meaning": "A biblical royal name commonly linked in tradition with Persian roots.",
+      "styles": [
+        "biblical",
+        "classic",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Miriam",
+      "gender": "girl",
+      "origin": "Hebrew",
+      "meaning": "An ancient biblical Hebrew name with a long history and debated original meaning.",
+      "styles": [
+        "biblical",
+        "classic",
+        "vintage"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Selah",
+      "gender": "girl",
+      "origin": "Hebrew",
+      "meaning": "A biblical word appearing in the Psalms whose precise ancient meaning is uncertain.",
+      "styles": [
+        "biblical",
+        "rare",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Lydia",
+      "gender": "girl",
+      "origin": "Greek",
+      "meaning": "A classical and biblical name originally identifying a woman from Lydia.",
+      "styles": [
+        "classic",
+        "biblical",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Gabriella",
+      "gender": "girl",
+      "origin": "Italian",
+      "meaning": "An Italian feminine form of Gabriel.",
+      "styles": [
+        "classic",
+        "elegant",
+        "biblical"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Valentina",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "A Latin-derived feminine name associated with strength and health.",
+      "styles": [
+        "elegant",
+        "strong",
+        "classic"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Catalina",
+      "gender": "girl",
+      "origin": "Spanish",
+      "meaning": "A Spanish form of Katherine with a long European history.",
+      "styles": [
+        "elegant",
+        "classic"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Elena",
+      "gender": "girl",
+      "origin": "Spanish",
+      "meaning": "A widely used European form related to Helen.",
+      "styles": [
+        "classic",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Marisol",
+      "gender": "girl",
+      "origin": "Spanish",
+      "meaning": "A Spanish given name often associated with María de la Soledad and also evocative of mar y sol.",
+      "styles": [
+        "elegant",
+        "rare",
+        "nature"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Paloma",
+      "gender": "girl",
+      "origin": "Spanish",
+      "meaning": "A Spanish name meaning “dove.”",
+      "styles": [
+        "elegant",
+        "rare",
+        "nature"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Esme",
+      "gender": "girl",
+      "origin": "French",
+      "meaning": "A French-rooted name traditionally associated with esteem or being beloved.",
+      "styles": [
+        "elegant",
+        "rare",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Colette",
+      "gender": "girl",
+      "origin": "French",
+      "meaning": "A French form related to Nicole and Nicholas.",
+      "styles": [
+        "elegant",
+        "vintage",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Nadia",
+      "gender": "girl",
+      "origin": "Multicultural",
+      "meaning": "A widely used international name with Slavic and Arabic naming traditions.",
+      "styles": [
+        "elegant",
+        "classic",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Samira",
+      "gender": "girl",
+      "origin": "Arabic",
+      "meaning": "An Arabic name traditionally associated with pleasant evening conversation or companionship.",
+      "styles": [
+        "elegant",
+        "strong",
+        "rare"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Zahra",
+      "gender": "girl",
+      "origin": "Arabic",
+      "meaning": "An Arabic name associated with brightness, radiance, or flowers.",
+      "styles": [
+        "elegant",
+        "strong",
+        "nature"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Yasmin",
+      "gender": "girl",
+      "origin": "Arabic",
+      "meaning": "A name associated with the jasmine flower, used across Arabic, Persian, and other traditions.",
+      "styles": [
+        "elegant",
+        "nature",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Aisha",
+      "gender": "girl",
+      "origin": "Arabic",
+      "meaning": "An Arabic name traditionally associated with life or living.",
+      "styles": [
+        "classic",
+        "strong",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Fatima",
+      "gender": "girl",
+      "origin": "Arabic",
+      "meaning": "A historic Arabic name with deep religious and cultural significance.",
+      "styles": [
+        "classic",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Leila",
+      "gender": "girl",
+      "origin": "Arabic",
+      "meaning": "A form of Layla, an Arabic name associated with night.",
+      "styles": [
+        "elegant",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Ayana",
+      "gender": "girl",
+      "origin": "Multicultural",
+      "meaning": "A modern international name used across multiple cultural traditions.",
+      "styles": [
+        "modern",
+        "elegant",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Amani",
+      "gender": "unisex",
+      "origin": "African",
+      "meaning": "A Swahili name meaning “peace.”",
+      "styles": [
+        "strong",
+        "modern",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Sade",
+      "gender": "girl",
+      "origin": "African",
+      "meaning": "A Yoruba-derived short form associated with names containing the element for honor or crown.",
+      "styles": [
+        "strong",
+        "elegant",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Kiana",
+      "gender": "girl",
+      "origin": "Multicultural",
+      "meaning": "A modern name used in several cultural contexts with different possible roots.",
+      "styles": [
+        "modern",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Fiona",
+      "gender": "girl",
+      "origin": "Scottish",
+      "meaning": "A Scottish literary name developed from Gaelic naming elements.",
+      "styles": [
+        "classic",
+        "elegant",
+        "vintage"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Freya",
+      "gender": "girl",
+      "origin": "Germanic",
+      "meaning": "A name from Norse mythology associated with the goddess Freyja.",
+      "styles": [
+        "strong",
+        "nature",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Astrid",
+      "gender": "girl",
+      "origin": "Germanic",
+      "meaning": "A Scandinavian name with Old Norse roots traditionally associated with divine beauty.",
+      "styles": [
+        "strong",
+        "rare",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Juniper",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English botanical name taken from the juniper tree.",
+      "styles": [
+        "nature",
+        "rare",
+        "modern"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Wren",
+      "gender": "unisex",
+      "origin": "English",
+      "meaning": "An English nature name taken from the small songbird.",
+      "styles": [
+        "nature",
+        "rare",
+        "modern"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Briar",
+      "gender": "unisex",
+      "origin": "English",
+      "meaning": "An English nature word name referring to a thorny plant.",
+      "styles": [
+        "nature",
+        "rare",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Autumn",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English seasonal word name.",
+      "styles": [
+        "nature",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Summer",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English seasonal word name.",
+      "styles": [
+        "nature",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Meadow",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English nature word name referring to open grassland.",
+      "styles": [
+        "nature",
+        "rare",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Skye",
+      "gender": "unisex",
+      "origin": "Scottish",
+      "meaning": "A place-inspired name associated with Scotland’s Isle of Skye.",
+      "styles": [
+        "nature",
+        "modern",
+        "rare"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Nova",
+      "gender": "girl",
+      "origin": "Latin",
+      "meaning": "A Latin-derived word meaning “new,” also used in astronomy for a suddenly brightening star.",
+      "styles": [
+        "modern",
+        "nature",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    },
+    {
+      "name": "Lyra",
+      "gender": "girl",
+      "origin": "Greek",
+      "meaning": "A name associated with the lyre and the constellation Lyra.",
+      "styles": [
+        "nature",
+        "rare",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated"
+    }
+  ]
+}
