@@ -1,6 +1,6 @@
 # Name the Baby SEO Keyword Map
 
-Updated: 2026-09-26
+Updated: 2026-10-03
 
 This document keeps the one-page SEO strategy focused on real user intent. It is an editorial map, not a license to create doorway pages. New visible examples must come only from reviewed catalog records.
 
@@ -82,11 +82,11 @@ Before promoting a new origin/style/meaning combination on the homepage, confirm
 
 ### Catalog handoff requirement
 
-The next infrastructure milestone is a machine-readable reviewed catalog artifact in the repository (JSON or CSV is sufficient) containing, at minimum: name, reviewed gender usage, reviewed origin/tradition, reviewed meaning/history, confidence/review status, and optional style tags. Include reviewed syllable count and pronunciation when supportable so sound/length discovery can expand safely later.
+The repository now includes a machine-readable reviewed catalog artifact containing name, reviewed gender usage, origin/tradition, meaning/history, confidence/review status, style tags, and syllable count when supportable. The artifact remains the release source for crawlable examples; directory-only records cannot qualify a cluster.
 
 SEO tooling should use this artifact to count eligible clusters automatically and flag which meaning/origin/gender/letter/style/syllable combinations have crossed the publication threshold. Until that artifact exists, do not infer that a cluster is ready from the unreviewed directory or from competitor examples.
 
-**Repository status, 2026-09-23:** no separate machine-readable V19 reviewed catalog artifact is present in the repository yet. This blocks responsible automatic cluster counts and is why today's work does not add unverified name examples to the live homepage.
+**Repository status, 2026-10-03:** `docs/catalog-reviewed.json` contains 241 curated profiles, including 32 newly completed V19 profiles. Multi-tradition origins are preserved as arrays, disputed roots stay qualified in the profile wording, and literal meaning taxonomy is explicit rather than inferred from prose.
 
 ## Measurement
 
@@ -125,7 +125,9 @@ For each bucket, record a baseline 28-day period and compare subsequent 28-day p
 - 2026-09-20: long-tail publication thresholds formalized; meaning-led intent elevated based on fresh competitor evidence; middle-name demand recorded as a future product-dependent opportunity rather than prematurely targeted SEO copy.
 - 2026-09-21: meaning taxonomy refined to separate literal etymology from thematic/style associations; catalog-to-SEO release gate added; Search Console measurement buckets defined; “baby name matcher” recorded as an adjacent decision-tool query rather than automatically added to visible copy.
 - 2026-09-22: competitor intent research refreshed; style family expanded cautiously to include cool/cute/edgy as monitored opportunities; seasonal/spiritual/color/month/astrology discovery recorded as product-dependent opportunities; catalog release gate strengthened for disputed/multi-origin names; machine-readable V19 handoff formalized as the next infrastructure milestone.
-- 2026-09-23: fresh competitor research confirmed continuing demand around gender/origin/letter/style/meaning/syllable discovery and additional meaning clusters including grace and joy/happiness; syllable and sound-pattern opportunities added as monitored families; V19 repository handoff status recorded explicitly. No new homepage examples were added because no machine-readable reviewed V19 artifact is yet available in the repository.
+- 2026-09-23: fresh competitor research confirmed continuing demand around gender/origin/letter/style/meaning/syllable discovery and additional meaning clusters including grace and joy/happiness; syllable and sound-pattern opportunities added as monitored families; V19 repository handoff status recorded explicitly. No new homepage examples were added because no machine-readable reviewed V19 artifact was yet available in the repository.
+- 2026-09-26: machine-readable reviewed catalog and readiness tooling added; four qualifying origin + gender clusters released as static homepage examples.
+- 2026-10-03: 32 verified V19 profiles integrated into production and the reviewed artifact (241 total); multi-origin and explicit meaning-taxonomy readiness added; Arabic boy, Irish girl, Spanish boy, and Italian boy examples released on the one-page homepage.
 
 ## Technical guardrails
 
@@ -150,6 +152,14 @@ The reviewed production profiles are exported to `docs/catalog-reviewed.json`. D
 
 Run `node scripts/seo-readiness.mjs` to validate the artifact and calculate readiness for origin + gender, first letter + gender, style, and syllable clusters. The default publication floor is five matching reviewed records, with eight preferred.
 
-Current reviewed inventory: 209 profiles. The counter shows several qualifying origin + gender groups, including Hebrew boy names, Arabic girl names, Irish boy names, and Spanish girl names. These four groups now have crawlable homepage examples drawn directly from the reviewed artifact.
+Current reviewed inventory: 241 profiles. The V19 batch moves Arabic boy names, Irish girl names, Spanish boy names, and Italian boy names across the five-profile publication floor. These groups now have crawlable homepage examples drawn directly from the reviewed artifact, alongside the previously released Hebrew boy, Arabic girl, Irish boy, and Spanish girl examples.
 
-Literal meaning clusters remain on hold until V19 adds explicit meaning-taxonomy tags. Keyword matching against prose definitions is not sufficient evidence that a name literally belongs in “names that mean strength,” “names that mean hope,” or similar collections.
+Literal meaning clusters remain on hold. The artifact now supports explicit `meaningConcepts`, but the reviewed counts are below the five-name publication floor. Keyword matching against prose definitions is never used to force a name into “names that mean strength,” “names that mean hope,” or similar collections.
+
+## Research refresh — 2026-10-03
+
+The current [Google people-first content guidance](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) emphasizes useful main content, accuracy, originality, and a satisfying experience rather than a target word count. That supports enriching the existing one-page tool with verified examples instead of producing thin doorway URLs.
+
+Current competitor interfaces continue to expose gender, initial, origin, style, meaning, and syllables as primary discovery controls: [The Bump baby name generator](https://www.thebump.com/b/baby-name-generator) and [Nameberry A–Z search](https://nameberry.com/baby-names-a-z) were checked on 2026-10-03. Name the Baby already supports those core actions on one page; the differentiated opportunity is to connect them to reviewed catalog evidence, surname preview, shortlist, comparison, creation, and family voting.
+
+Google's current [canonical guidance](https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls) recommends aligning redirects, rel=canonical, and sitemap URLs. The repository signals remain aligned on `https://www.namethebaby.site/`; HTTP behavior still needs a live-host check after deployment.
