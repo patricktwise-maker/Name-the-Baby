@@ -1,12 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedOn": "2026-09-26",
+  "generatedOn": "2026-10-03",
   "source": "index.html",
   "scope": "Curated profiles only; directory-only records are excluded.",
-  "recordCount": 209,
+  "recordCount": 241,
   "fields": {
     "reviewStatus": "curated means the production catalog marks the profile as editorially curated; it is not a confidence score.",
-    "popularity": "Excluded. Popularity is maintained separately from this reviewed-profile artifact."
+    "popularity": "Excluded. Popularity is maintained separately from this reviewed-profile artifact.",
+    "origins": "Optional array preserves multiple verified language or naming traditions; origin is the primary display label.",
+    "meaningConcepts": "Optional, explicit literal-meaning taxonomy. Absent means unclassified, not unknown.",
+    "confidence": "Editorial confidence in the etymology/profile wording; disputed roots remain qualified in the visible meaning."
   },
   "records": [
     {
@@ -2663,6 +2666,558 @@
       ],
       "syllables": 2,
       "reviewStatus": "curated"
+    },
+    {
+      "name": "Faris",
+      "gender": "boy",
+      "origin": "Arabic",
+      "origins": [
+        "Arabic",
+        "Bosnian",
+        "Malay",
+        "Indonesian"
+      ],
+      "meaning": "An Arabic name meaning “horseman” or “knight,” also used in Bosnian, Malay and Indonesian traditions.",
+      "styles": [
+        "strong",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Candace",
+      "gender": "girl",
+      "origin": "Meroitic",
+      "origins": [
+        "Meroitic",
+        "Biblical",
+        "English"
+      ],
+      "meaning": "A given name drawn from an ancient hereditary title used by queens or queen mothers of Kush.",
+      "styles": [
+        "classic",
+        "strong",
+        "elegant",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Desiree",
+      "gender": "girl",
+      "origin": "French",
+      "origins": [
+        "French",
+        "English"
+      ],
+      "meaning": "The English form of French Désirée, associated with being desired or wished for.",
+      "styles": [
+        "elegant",
+        "vintage"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Keri",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English feminine variant of Kerry.",
+      "styles": [
+        "modern",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Monique",
+      "gender": "girl",
+      "origin": "French",
+      "origins": [
+        "French",
+        "English",
+        "Dutch"
+      ],
+      "meaning": "The French form of Monica; the name family’s deepest origin is uncertain, probably Berber or Phoenician.",
+      "styles": [
+        "elegant",
+        "classic",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "high"
+    },
+    {
+      "name": "Liza",
+      "gender": "girl",
+      "origin": "English",
+      "origins": [
+        "English",
+        "Russian",
+        "Greek",
+        "Georgian"
+      ],
+      "meaning": "A short form of Elizabeth and its language-specific equivalents.",
+      "styles": [
+        "classic",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Corrie",
+      "gender": "girl",
+      "origin": "English",
+      "origins": [
+        "English",
+        "Dutch"
+      ],
+      "meaning": "A diminutive of Cora, Corinna, Cornelia and other Cor- names; also used as a feminine form of Corey.",
+      "styles": [
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Marvin",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "A surname-derived name that may trace to Welsh Merfyn or Old English Mærwine.",
+      "styles": [
+        "vintage",
+        "strong",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "high"
+    },
+    {
+      "name": "Marcelo",
+      "gender": "boy",
+      "origin": "Spanish",
+      "origins": [
+        "Spanish",
+        "Portuguese"
+      ],
+      "meaning": "The Spanish and Portuguese form of the ancient Roman name Marcellus.",
+      "styles": [
+        "classic",
+        "strong",
+        "elegant"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Hartwig",
+      "gender": "boy",
+      "origin": "Germanic",
+      "origins": [
+        "Germanic",
+        "German"
+      ],
+      "meaning": "An old Germanic name built from elements associated with firmness or bravery and battle.",
+      "styles": [
+        "strong",
+        "rare",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "meaningConcepts": [
+        "bravery"
+      ],
+      "confidence": "very-high"
+    },
+    {
+      "name": "Vanessa",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A literary name invented by Jonathan Swift from Esther Vanhomrigh’s name and later used for a butterfly genus.",
+      "styles": [
+        "elegant",
+        "classic",
+        "nature"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Cäcilie",
+      "gender": "girl",
+      "origin": "German",
+      "meaning": "The German form of Cecilia.",
+      "styles": [
+        "classic",
+        "elegant",
+        "vintage"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Rhys",
+      "gender": "boy",
+      "origin": "Welsh",
+      "meaning": "A Welsh name from Old Welsh Ris, probably expressing ardor or enthusiasm.",
+      "styles": [
+        "strong",
+        "classic"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated",
+      "confidence": "high"
+    },
+    {
+      "name": "Carl",
+      "gender": "boy",
+      "origin": "German",
+      "origins": [
+        "German",
+        "Swedish",
+        "Danish",
+        "Norwegian",
+        "English"
+      ],
+      "meaning": "A German and Scandinavian form in the Karl and Charles name family.",
+      "styles": [
+        "classic",
+        "strong",
+        "vintage"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Danilo",
+      "gender": "boy",
+      "origin": "Slavic",
+      "origins": [
+        "Italian",
+        "Portuguese",
+        "Spanish",
+        "Slovene",
+        "Serbian",
+        "Croatian"
+      ],
+      "meaning": "A form of Daniel used across several European languages, ultimately from a Hebrew name traditionally interpreted as “God is my judge.”",
+      "styles": [
+        "classic",
+        "strong",
+        "biblical"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Marianne",
+      "gender": "girl",
+      "origin": "French",
+      "origins": [
+        "French",
+        "English",
+        "German",
+        "Dutch",
+        "Scandinavian"
+      ],
+      "meaning": "Usually a combination of Marie and Anne, though it can overlap historically with Mariana or Mariamne.",
+      "styles": [
+        "classic",
+        "elegant",
+        "vintage"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Arturo",
+      "gender": "boy",
+      "origin": "Italian",
+      "origins": [
+        "Italian",
+        "Spanish"
+      ],
+      "meaning": "The Italian and Spanish form of Arthur; Arthur’s deepest etymology remains disputed.",
+      "styles": [
+        "classic",
+        "strong"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated",
+      "confidence": "high"
+    },
+    {
+      "name": "Celal",
+      "gender": "boy",
+      "origin": "Turkish",
+      "origins": [
+        "Turkish",
+        "Kurdish"
+      ],
+      "meaning": "The Turkish and Kurdish form of Jalal, associated with greatness or majesty.",
+      "styles": [
+        "strong",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Raul",
+      "gender": "boy",
+      "origin": "Portuguese",
+      "origins": [
+        "Portuguese",
+        "Italian",
+        "Romanian",
+        "Estonian",
+        "Azerbaijani"
+      ],
+      "meaning": "A form in the Ralph and Radulf name family, built from old elements associated with counsel and wolf.",
+      "styles": [
+        "classic",
+        "strong"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Meghan",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "An English variant of Megan in the Margaret name family.",
+      "styles": [
+        "classic",
+        "modern"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Caoimhe",
+      "gender": "girl",
+      "origin": "Irish",
+      "meaning": "An Irish name from caomh, expressing dear, beloved or gentle qualities.",
+      "styles": [
+        "elegant",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "meaningConcepts": [
+        "love"
+      ],
+      "confidence": "very-high"
+    },
+    {
+      "name": "Marko",
+      "gender": "boy",
+      "origin": "Slavic",
+      "origins": [
+        "Croatian",
+        "Serbian",
+        "Slovene",
+        "Bulgarian",
+        "Macedonian",
+        "Ukrainian",
+        "Finnish",
+        "Estonian",
+        "Basque"
+      ],
+      "meaning": "A regional form of Mark used across several European languages; the deeper origin of Mark is not fully settled.",
+      "styles": [
+        "strong",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "high"
+    },
+    {
+      "name": "Janus",
+      "gender": "boy",
+      "origin": "Latin",
+      "meaning": "A Roman mythological name associated with an archway; Janus was the god of doorways, beginnings and transitions.",
+      "styles": [
+        "rare",
+        "strong",
+        "classic"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Franklin",
+      "gender": "boy",
+      "origin": "English",
+      "meaning": "A surname-derived name from a Middle English term for a freeman.",
+      "styles": [
+        "classic",
+        "strong",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Iqbal",
+      "gender": "boy",
+      "origin": "Arabic",
+      "origins": [
+        "Arabic",
+        "Urdu",
+        "Bengali",
+        "Indonesian",
+        "Malay"
+      ],
+      "meaning": "An Arabic-derived name associated with fortune or prosperity.",
+      "styles": [
+        "strong",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "aliases": [
+        "Ikbal"
+      ],
+      "meaningConcepts": [
+        "prosperity"
+      ],
+      "confidence": "very-high"
+    },
+    {
+      "name": "Bronagh",
+      "gender": "girl",
+      "origin": "Irish",
+      "meaning": "The Anglicized form of Brónach, historically derived from an Irish word connected with sorrow.",
+      "styles": [
+        "rare",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "aliases": [
+        "Brónach"
+      ],
+      "confidence": "very-high"
+    },
+    {
+      "name": "Lacey",
+      "gender": "unisex",
+      "origin": "English",
+      "meaning": "A surname-derived English name and variant of Lacy, documented for both girls and boys.",
+      "styles": [
+        "modern",
+        "elegant"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Gillian",
+      "gender": "girl",
+      "origin": "English",
+      "meaning": "A medieval English feminine form of Julian, documented since the 13th century.",
+      "styles": [
+        "classic",
+        "elegant",
+        "vintage"
+      ],
+      "syllables": 3,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Ariana",
+      "gender": "girl",
+      "origin": "Portuguese",
+      "origins": [
+        "Portuguese",
+        "English"
+      ],
+      "meaning": "A Portuguese form of Ariadne that later developed substantial modern English usage.",
+      "styles": [
+        "elegant",
+        "modern"
+      ],
+      "syllables": 4,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Uli",
+      "gender": "unisex",
+      "origin": "German",
+      "meaning": "A German diminutive of masculine Ulrich or feminine Ulrike.",
+      "styles": [
+        "modern",
+        "rare"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Heiko",
+      "gender": "boy",
+      "origin": "German",
+      "origins": [
+        "Low German",
+        "German",
+        "Frisian"
+      ],
+      "meaning": "A Low German and Frisian diminutive of Henrik.",
+      "styles": [
+        "strong",
+        "vintage"
+      ],
+      "syllables": 2,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
+    },
+    {
+      "name": "Saul",
+      "gender": "boy",
+      "origin": "Hebrew",
+      "origins": [
+        "Hebrew",
+        "Biblical",
+        "Jewish"
+      ],
+      "meaning": "An ancient Hebrew name traditionally interpreted as “asked for” or “prayed for.”",
+      "styles": [
+        "biblical",
+        "classic",
+        "strong"
+      ],
+      "syllables": 1,
+      "reviewStatus": "curated",
+      "confidence": "very-high"
     }
   ]
 }
