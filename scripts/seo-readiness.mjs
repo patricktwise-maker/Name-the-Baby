@@ -28,7 +28,8 @@ const dimensions = {
   originGender: new Map(),
   letterGender: new Map(),
   style: new Map(),
-  syllables: new Map()
+  syllables: new Map(),
+  meaningConcept: new Map()
 };
 
 for (const [index, record] of records.entries()) {
@@ -45,10 +46,12 @@ for (const [index, record] of records.entries()) {
     continue;
   }
 
-  add(dimensions.originGender, `${record.origin} | ${record.gender}`, record.name);
+  const reviewedOrigins = [...new Set(record.origins || [record.origin])];
+  for (const origin of reviewedOrigins) add(dimensions.originGender, `${origin} | ${record.gender}`, record.name);
   add(dimensions.letterGender, `${record.name[0].toUpperCase()} | ${record.gender}`, record.name);
   for (const style of record.styles) add(dimensions.style, style, record.name);
   add(dimensions.syllables, `${record.syllables} syllable${record.syllables === 1 ? "" : "s"}`, record.name);
+  for (const concept of record.meaningConcepts || []) add(dimensions.meaningConcept, concept, record.name);
 }
 
 if (records.length !== catalog.recordCount) {
@@ -63,7 +66,7 @@ if (errors.length) {
     generatedFrom: "docs/catalog-reviewed.json",
     reviewedRecords: records.length,
     thresholds: { minimum: MINIMUM, preferred: PREFERRED },
-    note: "Meaning clusters are intentionally omitted until reviewed records receive explicit literal-meaning taxonomy tags.",
+    note: "Meaning clusters use only explicit literal-meaning taxonomy tags; untagged prose is never keyword-classified.",
     dimensions: Object.fromEntries(
       Object.entries(dimensions).map(([key, map]) => [key, summarize(map)])
     )
